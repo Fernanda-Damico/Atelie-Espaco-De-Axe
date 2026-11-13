@@ -2,7 +2,7 @@
 
 Aplicação web responsiva desenvolvida para o **Ateliê Espaço de Axé**, projetada para apresentar produtos artesanais, facilitar o contato comercial e gerenciar o catálogo de forma dinâmica.
 
-🔗 **Acesse o site online:** [https://espaco-axe.web.app/](https://espaco-axe.web.app)
+🔗 **Acesse o site online:** (https://www.atelieespacodeaxe.com.br)
 
 ---
 
