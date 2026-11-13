@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // >>> TROQUE pelo e-mail que a cliente usa para entrar no painel <<<
+    function admin() {
+      return request.auth != null
+        && request.auth.token.email == 'atelieespacodeaxe@gmail.com';
+    }
+
+    // Produtos: todos veem; só a cliente cadastra/edita/exclui.
+    // Visitantes só podem BAIXAR o estoque (compra pelo site).
+    match /produtos/{id} {
+      allow read: if true;
+      allow create, delete: if admin();
+      allow update: if admin()
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['estoque'])
+            && request.resource.data.estoque is int
+            && request.resource.data.estoque >= 0
+            && request.resource.data.estoque < resource.data.estoque);
+    }
+
+    // Pedidos: visitantes criam; só a cliente lê e gerencia.
+    match /pedidos/{id} {
+      allow create: if request.resource.data.numero is string
+        && request.resource.data.itens is list
+        && request.resource.data.itens.size() > 0
+        && request.resource.data.itens.size() <= 50;
+      allow read, update, delete: if admin();
+    }
+
+    // Avaliações: público só vê as aprovadas; visitantes enviam já "não aprovada".
+    match /avaliacoes/{id} {
+      allow read: if resource.data.aprovada == true || admin();
+      allow create: if request.resource.data.aprovada == false
+        && request.resource.data.nota is int
+        && request.resource.data.nota >= 1 && request.resource.data.nota <= 5
+        && request.resource.data.nome is string && request.resource.data.nome.size() <= 80
+        && request.resource.data.comentario is string && request.resource.data.comentario.size() <= 1000;
+      allow update, delete: if admin();
+    }
+  }
+}

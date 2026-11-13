@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "headers": [
+      { "source": "/painel.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    ]
+  },
+  "firestore": { "rules": "firestore.rules" }
+}
