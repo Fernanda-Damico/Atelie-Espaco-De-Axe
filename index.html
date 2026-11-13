@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço de Axé | Artesanato com Alma, Feito à Mão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .font-display { font-family: 'Playfair Display', serif; }
+            .font-body { font-family: 'Inter', sans-serif; }
+            .color-bordeaux { color: #B31B1B; }
+            .bg-bordeaux { background-color: #B31B1B; }
+            .border-bordeaux { border-color: #B31B1B; }
+            .bg-cream { background-color: #F8F2E9; }
+            .text-cream { color: #F8F2E9; }
+            .bg-darkest { background-color: #0C0C0C; }
+            .bg-dark { background-color: #1A1414; }
+            .text-shadow-soft { text-shadow: 0 2px 4px rgba(0,0,0,0.35); }
+            .card-gradient { background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.85)); }
+            .scroll-smooth { scroll-behavior: smooth; }
+            .star-filled { color: #D4AF37; }
+            .star-empty { color: #444; }
+        }
+    </style>
+    <style>
+        /* Ajustes para celular: evita zoom automático ao tocar nos campos (iOS) e rolagem lateral */
+        @media (max-width: 767px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+        body { overflow-x: hidden; }
+    </style>
+</head>
+<body class="bg-darkest text-white font-body antialiased scroll-smooth">
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="bg-cream text-darkest sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center justify-between py-3">
+                <a href="#" onclick="mostrarSecao('inicio')" class="flex items-center">
+                    <img src="logo.png" alt="Espaço de Axé - Ateliê" class="h-16 sm:h-20 lg:h-28 w-auto object-contain">
+                </a>
+
+                <!-- Navegação -->
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-medium">
+                    <a href="#" onclick="mostrarSecao('inicio')" class="nav-link text-black font-semibold border-b-2 border-bordeaux pb-1" data-page="inicio">Início</a>
+                    <a href="#" onclick="mostrarSecao('produtos')" class="nav-link text-black transition-colors" data-page="produtos">Produtos</a>
+                    <a href="#" onclick="mostrarSecao('orixas')" class="nav-link text-black transition-colors" data-page="orixas">Orixás</a>
+                    <a href="#" onclick="mostrarSecao('sobre')" class="nav-link text-black transition-colors" data-page="sobre">Sobre Nós</a>
+                    <a href="#" onclick="mostrarSecao('avaliacoes')" class="nav-link text-black transition-colors" data-page="avaliacoes">Avaliações</a>
+                    <a href="#" onclick="mostrarSecao('contato')" class="nav-link text-black transition-colors" data-page="contato">Contato</a>
+                </nav>
+
+                <!-- Ícones -->
+                <div class="flex items-center gap-0.5 sm:gap-2 lg:gap-6 text-xl">
+                    <a href="#" onclick="pedirNomeCliente()" class="inline-flex h-11 w-11 shrink-0 items-center justify-center text-black transition-colors lg:h-auto lg:w-auto" title="Identificar-se">
+                        <i class="fa fa-user text-black text-xl"></i>
+                    </a>
+
+                    <a href="#" onclick="event.preventDefault(); abrirCarrinho()" class="relative inline-flex h-11 w-11 shrink-0 items-center justify-center lg:h-auto lg:w-auto" title="Carrinho">
+                        <i class="fa fa-shopping-bag text-black"></i>
+                        <span id="contador-carrinho" class="absolute -top-2 -right-3 bg-black text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                    </a>
+
+                    <button id="botao-menu" onclick="alternarMenuMobile()" class="inline-flex h-11 w-11 shrink-0 items-center justify-center text-black lg:hidden" aria-label="Abrir menu" aria-expanded="false">
+                        <i id="icone-menu" class="fa fa-bars text-black"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu para celular e tablet -->
+        <div id="menu-mobile" class="hidden lg:hidden border-t border-black/10 bg-cream">
+            <nav class="container mx-auto px-4 md:px-6 flex flex-col py-2 text-base font-medium">
+                <a href="#" onclick="mostrarSecao('inicio'); return false;" class="nav-link py-3 text-black border-b border-black/10" data-page="inicio">Início</a>
+                <a href="#" onclick="mostrarSecao('produtos'); return false;" class="nav-link py-3 text-black border-b border-black/10" data-page="produtos">Produtos</a>
+                <a href="#" onclick="mostrarSecao('orixas'); return false;" class="nav-link py-3 text-black border-b border-black/10" data-page="orixas">Orixás</a>
+                <a href="#" onclick="mostrarSecao('sobre'); return false;" class="nav-link py-3 text-black border-b border-black/10" data-page="sobre">Sobre Nós</a>
+                <a href="#" onclick="mostrarSecao('avaliacoes'); return false;" class="nav-link py-3 text-black border-b border-black/10" data-page="avaliacoes">Avaliações</a>
+                <a href="#" onclick="mostrarSecao('contato'); return false;" class="nav-link py-3 text-black" data-page="contato">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== BUSCA ===== -->
+    <div id="caixa-busca" class="fixed top-0 left-0 w-full max-h-[90vh] overflow-y-auto bg-cream z-50 p-4 md:p-6 shadow-lg transform -translate-y-full transition-transform duration-300">
+        <div class="container mx-auto flex items-center gap-4">
+            <input type="text" id="campo-busca" placeholder="Buscar produtos..." oninput="buscarProdutos(this.value)" class="min-w-0 flex-1 px-3 py-3 border border-gray-300 rounded-sm text-base text-black focus:outline-none focus:border-bordeaux sm:px-6 sm:text-lg">
+            <button onclick="fecharBusca()" class="inline-flex h-11 w-11 shrink-0 items-center justify-center text-2xl text-gray-600 hover:text-bordeaux"><i class="fa fa-times"></i></button>
+        </div>
+        <div id="resultados-busca" class="container mx-auto mt-4 hidden"></div>
+    </div>
+    <div id="fundo-busca" onclick="fecharBusca()" class="fixed inset-0 bg-black/30 z-40 hidden"></div>
+
+    <!-- ===== MODAL: DADOS DO CLIENTE PARA FINALIZAR A COMPRA ===== -->
+    <div id="modal-dados-cliente" class="fixed inset-0 bg-black/80 z-[70] hidden items-center justify-center p-4">
+        <form onsubmit="confirmarDadosPedido(event)" class="bg-dark w-full max-w-md rounded-sm p-6 shadow-2xl space-y-4">
+            <h3 class="font-display text-2xl font-semibold text-cream">Finalizar pedido</h3>
+            <p class="text-sm text-gray-400">Usaremos o seu WhatsApp para avisar quando o pedido entrar em produção e quando for enviado.</p>
+            <div>
+                <label class="block text-sm font-medium mb-2 text-gray-300">Seu Nome</label>
+                <input type="text" id="dados-nome" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-2 text-gray-300">Seu WhatsApp (com DDD)</label>
+                <input type="tel" id="dados-whatsapp" inputmode="tel" required placeholder="(11) 91234-5678" class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="fecharModalDadosEContinuarComprando()" class="flex-1 border border-gray-600 text-gray-300 py-3 rounded-sm hover:border-bordeaux transition">Continuar comprando</button>
+                <button type="submit" class="flex-1 bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition">CONFIRMAR E IR PARA O WHATSAPP</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="modal-descricao-admin" class="fixed inset-0 z-[80] hidden items-center justify-center bg-black/80 p-4" onclick="fecharModalDescricaoProduto()">
+        <section role="dialog" aria-modal="true" aria-labelledby="titulo-descricao-admin" class="flex max-h-[85vh] w-full max-w-2xl flex-col border border-gray-700 bg-dark p-5 shadow-2xl md:p-8" onclick="event.stopPropagation()">
+            <header class="flex items-start justify-between gap-4 border-b border-gray-700 pb-4">
+                <h2 id="titulo-descricao-admin" class="font-display text-xl font-semibold text-cream">Descrição do produto</h2>
+                <button type="button" onclick="fecharModalDescricaoProduto()" aria-label="Fechar descrição" class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-xl text-gray-300 hover:text-bordeaux"><i class="fa fa-times"></i></button>
+            </header>
+            <div id="conteudo-descricao-admin" class="min-h-0 flex-1 overflow-y-auto whitespace-pre-line py-5 text-justify leading-relaxed text-gray-200"></div>
+            <div id="editor-produto-modal" class="hidden min-h-0 flex-1 overflow-y-auto">
+                <div id="slot-form-produto-admin"></div>
+            </div>
+            <footer id="footer-descricao-admin" class="flex flex-col-reverse gap-3 border-t border-gray-700 pt-4 sm:flex-row sm:justify-end">
+                <button type="button" onclick="fecharModalDescricaoProduto()" class="border border-gray-600 px-5 py-3 text-gray-300 hover:border-bordeaux">Fechar</button>
+                <button type="button" onclick="editarProdutoDaDescricao()" class="bg-bordeaux px-5 py-3 font-semibold text-white hover:bg-red-700"><i class="fa fa-pencil mr-2"></i>Editar produto</button>
+            </footer>
+        </section>
+    </div>
+
+    <!-- ===== MODAL DE IMAGEM (LINHAS DE TRABALHO) ===== -->
+    <div id="modal-imagem" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden" onclick="fecharModalImagem()">
+        <div class="relative max-w-3xl w-full bg-dark p-2 rounded-sm" onclick="event.stopPropagation()">
+            <button onclick="fecharModalImagem()" class="absolute -top-10 right-0 text-white text-2xl hover:text-bordeaux"><i class="fa fa-times"></i></button>
+            <img id="imagem-modal-src" src="" alt="" class="w-full h-auto max-h-[80vh] object-contain rounded-sm">
+            <p id="titulo-modal-txt" class="text-center font-display text-lg text-cream mt-3"></p>
+        </div>
+    </div>
+
+    <!-- ===== CARRINHO LATERAL (SACOLA) ===== -->
+    <div id="carrinho" style="height:100dvh" class="fixed top-0 right-0 h-full w-full md:w-96 bg-cream text-darkest shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
+        <div class="h-full flex flex-col">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <h3 class="font-display text-2xl font-semibold text-black">Sua Sacola</h3>
+                <button onclick="fecharCarrinho()" class="text-xl text-black hover:text-bordeaux p-2"><i class="fa fa-times"></i></button>
+            </div>
+            <div id="lista-carrinho" class="flex-1 overflow-y-auto p-6">
+                <p class="text-gray-500 text-center py-10">Sua sacola está vazia</p>
+            </div>
+            <div class="p-6 border-t border-gray-200">
+                <div class="flex justify-between text-lg font-semibold mb-4 text-black">
+                    <span>Total:</span>
+                    <span id="total-carrinho">R$ 0,00</span>
+                </div>
+                <button onclick="finalizarCompra()" class="w-full bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition">FINALIZAR COMPRA</button>
+            </div>
+        </div>
+    </div>
+    <div id="fundo-carrinho" onclick="fecharCarrinho()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+    <!-- ===== PÁGINA INÍCIO ===== -->
+    <main id="pagina-inicio" class="pagina">
+        <section class="relative">
+            <div class="w-full min-h-[80vh] bg-cover bg-center flex items-center" style="background-image: url('fundo.jpg');">
+                <div class="container mx-auto px-4 md:px-6 py-16">
+                    <div class="max-w-2xl text-cream">
+                        <p class="text-sm tracking-[0.3em] mb-3 opacity-80">ESPAÇO DE AXÉ - ATELIÊ</p>
+                        <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-4 text-shadow-soft">
+                            ARTESANATO COM ALMA,<br>
+                            <span class="text-bordeaux font-bold">FEITO À MÃO</span>
+                        </h1>
+                        <p class="font-display italic text-lg md:text-xl mb-8 text-cream/90 max-w-xl">
+                            Conecte-se com a força dos Orixás através de peças únicas e cheias de axé.
+                        </p>
+                        <a href="#" onclick="mostrarSecao('produtos')" class="bg-bordeaux px-8 py-3 inline-flex items-center gap-3 rounded-sm font-semibold hover:bg-red-700 transition shadow-lg text-white text-sm tracking-wide">
+                            VER PRODUTOS <i class="fa fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bg-cream text-darkest py-6">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-truck text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">ENVIO SEGURO</p>
+                            <p class="text-xs text-gray-600">para todo o Brasil</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-shield text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">COMPRA 100% SEGURA</p>
+                            <p class="text-xs text-gray-600">seus dados protegidos</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-paint-brush text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">PRODUTOS ARTESANAIS</p>
+                            <p class="text-xs text-gray-600">feitos com muito axé</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-heart text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">ATENDIMENTO ESPECIALIZADO</p>
+                            <p class="text-xs text-gray-600">com respeito e acolhimento</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-darkest">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12">
+                    <p class="text-sm tracking-[0.3em] text-gray-400 uppercase">Nossas Categorias</p>
+                    <h2 class="font-display text-4xl md:text-5xl font-semibold mt-2 text-cream">LINHAS DE TRABALHO</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-5 justify-items-center">
+                    <div onclick="abrirModalImagem('Exu1.jpg', 'EXÚ E POMBA GIRA')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Exu1.jpg" alt="Exú e Pomba Gira" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">EXÚ E POMBA GIRA</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="abrirModalImagem('Preto velho.jpg', 'PRETO VELHO')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Preto velho.jpg" alt="PRETO VELHO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">PRETO VELHO</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="abrirModalImagem('Eres.jpg', 'ERES')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Eres.jpg" alt="Eres" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">ERES</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="abrirModalImagem('Boiadeiro.jpg', 'BOIADEIRO')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Boiadeiro.jpg" alt="Boiadeira" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">BOIADEIRO</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="abrirModalImagem('Marinheiro.jpg', 'MARINHEIRO')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Marinheiro.jpg" alt="Marinheiro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">MARINHEIRO</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+
+                    <div onclick="abrirModalImagem('Ciganos.jpg', 'CIGANOS')" class="group relative aspect-[3/4] rounded-sm overflow-hidden w-full max-w-[200px] cursor-pointer">
+                        <img src="Ciganos.jpg" alt="Ciganos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 card-gradient flex flex-col justify-end p-4">
+                            <h3 class="font-semibold text-lg text-cream">CIGANOS</h3><i class="fa fa-search-plus text-sm mt-1 text-cream"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-cream text-darkest">
+            <div class="container mx-auto px-4 md:px-6 max-w-5xl text-center">
+                <p class="text-sm tracking-[0.3em] text-gray-500 uppercase">Por que comprar no</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold mt-1 mb-4 text-black">ESPAÇO DE AXÉ</h2>
+                <div class="w-20 h-0.5 bg-bordeaux mx-auto mb-12"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-star text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">PRODUTOS EXCLUSIVOS</p>
+                            <p class="text-xs text-gray-600">peças únicas, feitas artesanalmente</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-heart text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">FEITOS COM ENERGIA E RESPEITO</p>
+                            <p class="text-xs text-gray-600">cada detalhe carrega o axé dos Orixás</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-leaf text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">TRADIÇÃO E CULTURA</p>
+                            <p class="text-xs text-gray-600">valorizando nossa ancestralidade</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <i class="fa fa-truck text-black text-2xl"></i>
+                        <div>
+                            <p class="font-semibold text-sm text-black">ENTREGA EM TODO O BRASIL</p>
+                            <p class="text-xs text-gray-600">com segurança e agilidade</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>            
+
+        <section class="py-20 bg-dark relative overflow-hidden">
+            <div class="absolute inset-0 opacity-20">
+                <img src="fundo.jpg" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+                    <div class="max-w-xl">
+                        <p class="text-sm tracking-[0.3em] text-gray-400 uppercase">Mais que produtos,</p>
+                        <h2 class="font-display text-3xl md:text-4xl font-semibold mt-1 mb-4 text-cream">É AXÉ EM CADA DETALHE</h2>
+                        <p class="text-gray-400">Adquira agora e leve a força dos Orixás para o seu lar.</p>
+                    </div>
+                    <div class="shrink-0">
+                        <a href="#" onclick="mostrarSecao('produtos')" class="bg-bordeaux px-8 py-3 inline-flex items-center gap-3 rounded-sm font-semibold hover:bg-red-700 transition shadow-lg text-white text-sm tracking-wide whitespace-nowrap">
+                            COMPRAR AGORA <i class="fa fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA PRODUTOS ===== -->
+    <main id="pagina-produtos" class="pagina hidden">
+        <section class="py-8 bg-cream text-darkest">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl text-center">
+                <p class="text-xs tracking-[0.3em] text-gray-500 uppercase">Informações sobre</p>
+                <h2 class="font-display text-2xl md:text-3xl font-semibold mt-1 mb-3 text-black">COMPRAS E DEVOLUÇÕES</h2>
+                <div class="w-16 h-0.5 bg-bordeaux mx-auto mb-6"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left">
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-clock-o text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Horário de funcionamento e resposta</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">De segunda a sexta-feira, das 09h às 19h, e aos sábados, das 09h às 12h.</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">O prazo máximo de resposta é de 2 dias úteis.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-truck text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Prazo de produção e envio</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0"><span class="font-semibold text-black">Peças disponíveis em estoque:</span> o envio é feito em até 24h (exceto aos finais de semana), após a efetivação do pagamento.</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0"><span class="font-semibold text-black">Peças especiais feitas sob encomenda:</span> o prazo é de 10 a 20 dias úteis para confecção + 24h para envio.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-paint-brush text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Modificação de peças</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Opções de alteração de cores e adereços disponíveis em estoque. Os valores podem variar do anúncio, dependendo da mudança realizada.</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Peças criadas exclusivamente para o cliente não serão trocadas.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-ban text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Prazo de cancelamento do pedido</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Pedidos que não forem finalizados serão cancelados automaticamente em 48h.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-shield text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Garantia</p>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Garantimos a integridade das peças até o momento da entrega.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start">
+                        <i class="fa fa-diamond text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Cuidados especiais</p>
+                            <ul class="text-xs leading-snug text-gray-700 space-y-0.5 list-disc pl-4 mb-1">
+                                <li>Evite contato com água, produtos químicos e de higiene.</li>
+                                <li>Não pratique exercícios físicos com suas bijuterias.</li>
+                                <li>Limpe com uma flanela após o uso.</li>
+                                <li>Proteja da umidade e do sol excessivo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 border border-black/10 rounded-sm p-3 flex gap-3 items-start md:col-span-3">
+                        <i class="fa fa-exchange text-black text-lg mt-0.5 w-5 text-center shrink-0"></i>
+                        <div class="min-w-0">
+                            <p class="font-semibold text-xs text-black uppercase mb-1">Problemas no envio, trocas e devoluções</p>
+                            <div class="md:grid md:grid-cols-2 md:gap-x-6">
+                                <div>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Ao receber o seu produto, orientamos que verifique se a embalagem está intacta. Caso ocorra alguma das situações abaixo, o cliente deverá recusar o recebimento do produto:</p>
+                            <ul class="text-xs leading-snug text-gray-700 space-y-0.5 list-disc pl-4 mb-1">
+                                <li>Embalagem aberta ou avariada (quebrada, rasgada, molhada ou amassada).</li>
+                                <li>Produto em desacordo com o pedido.</li>
+                            </ul>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Prezamos pelo cuidado com as peças em todas as etapas de confecção, envio e entrega.</p>
+                                </div>
+                                <div>
+                            <p class="text-xs leading-snug text-gray-700 mb-1 last:mb-0">Nos casos de trocas ou devoluções, o cliente arcará com o frete, e a solicitação poderá ser feita em até 30 dias após o recebimento. Para realizar a devolução, entre em contato com o vendedor pelo canal do WhatsApp.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl md:text-5xl font-semibold">NOSSOS PRODUTOS</h2>
+                    <p class="text-gray-400 mt-2">Peças artesanais únicas carregadas de axé</p>
+                </div>
+
+                <div class="bg-dark p-6 rounded-sm mb-10">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold mb-3">Filtrar</h4>
+                            <select id="filtro-orixa" onchange="filtrarPorOrixa(this.value)" class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                                <option value="Todos">Todos</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-3">Filtrar por Preço</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="range" id="filtro-preco" min="0" max="500" value="500" oninput="atualizarPrecoMax(this.value)" class="w-full accent-bordeaux">
+                                    <span id="valor-preco" class="text-sm font-semibold w-24 text-right">Até R$ 500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="grade-produtos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA DETALHE DO PRODUTO ===== -->
+    <main id="pagina-produto-detalhe" class="pagina hidden">
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6">
+                <a href="#" onclick="mostrarSecao('produtos')" class="inline-flex items-center gap-2 text-bordeaux mb-8 hover:underline">
+                    <i class="fa fa-arrow-left"></i> Voltar aos Produtos
+                </a>
+                <div id="conteudo-produto-detalhe" class="grid md:grid-cols-2 gap-10"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA ORIXÁS ===== -->
+    <main id="pagina-orixas" class="pagina hidden">
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl">
+                <div class="text-center mb-8">
+                    <h2 class="font-display text-4xl md:text-5xl font-semibold">OS ORIXÁS</h2>
+                    <p class="text-gray-400 mt-2">Conheça a essência e simbologia de cada Orixá</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">EXÚ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor dos caminhos, da comunicação e dos ciclos. Abre as portas e conduz as oportunidades.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OGUM</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor da guerra, do ferro e do trabalho. Força, coragem e determinação para vencer obstáculos.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OXÓSSI</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor das matas, da caça e da fartura. Sabedoria, equilíbrio e conexão com a natureza.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">IEMANJÁ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhora das águas salgadas, mãe protetora. Amor, fertilidade e força acolhedora do mar.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OXUM</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhora das águas doces, do ouro e do amor. Beleza, prosperidade e alegria.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">IANSÃ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhora dos ventos, do trovão e da transformação. Força, sabedoria e mudança.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">XANGÔ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor do trovão, do fogo e da justiça. Equilíbrio, autoridade e retidão.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OSSAIN</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor das folhas e ervas sagradas. Cura, conhecimento e o poder da natureza.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OBÁ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhora guerreira das águas revoltas. Coragem, determinação e força feminina.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">LOGUNEDÉ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Príncipe das matas e dos rios. Beleza, encanto e a dualidade de Oxóssi e Oxum.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OXUMARÊ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor do arco-íris e da continuidade. Renovação, riqueza e o movimento dos ciclos.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">NANÃ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhora da lama primordial, a mais ancestral das águas. Sabedoria, memória e serenidade.</p>
+                    </div>
+                    <div class="bg-dark p-5 rounded-sm hover:shadow-xl transition">
+                        <h3 class="font-display text-xl text-bordeaux mb-2">OBALUAÊ</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Senhor da terra, da saúde e da cura. Proteção, renovação e superação.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA SOBRE ===== -->
+    <main id="pagina-sobre" class="pagina hidden">
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 max-w-4xl">
+                <h2 class="font-display text-4xl md:text-5xl font-semibold text-center mb-8">SOBRE NÓS</h2>
+                <div class="w-20 h-0.5 bg-bordeaux mx-auto mb-10"></div>
+                <div class="bg-dark p-8 md:p-12 rounded-sm">
+                    <p class="text-lg mb-4">Fundado em 2016, o Ateliê Espaço de Axé nasceu do amor pelas religiões afro-brasileiras e do propósito de oferecer artigos religiosos confeccionados com respeito, qualidade e identidade.</p>
+                    <p class="text-lg mb-4">Ao longo de nossa trajetória, construímos uma relação de confiança com nossos clientes, ampliando nossa presença por meio das redes sociais, lojas virtuais e participação em eventos e feiras de artesanato e cultura afro-brasileira.</p>
+                    <p class="text-lg mb-4">Hoje, com nosso próprio site, iniciamos um novo capítulo dessa história, mantendo os valores que nos acompanham desde o início: respeito à ancestralidade, valorização da fé, atendimento personalizado e compromisso com a qualidade.</p>
+                    <p class="text-lg mb-4">Mais do que confeccionar guias e artigos religiosos, buscamos transformar cada peça em uma expressão de fé, identidade, devoção e axé.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA CONTATO ===== -->
+    <main id="pagina-contato" class="pagina hidden">
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 max-w-2xl">
+                <h2 class="font-display text-4xl md:text-5xl font-semibold text-center mb-8">CONTATO</h2>
+                <div class="w-20 h-0.5 bg-bordeaux mx-auto mb-10"></div>
+                <form id="form-contato" class="bg-dark p-8 rounded-sm space-y-4" onsubmit="enviarContatoWhatsApp(event)">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Seu Nome</label>
+                        <input type="text" id="contato-nome" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm focus:outline-none focus:border-bordeaux">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Seu E-mail</label>
+                        <input type="email" id="contato-email" class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm focus:outline-none focus:border-bordeaux">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Sua Mensagem</label>
+                        <textarea rows="5" id="contato-mensagem" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm focus:outline-none focus:border-bordeaux"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition">ENVIAR MENSAGEM</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PÁGINA AVALIAÇÕES ===== -->
+    <main id="pagina-avaliacoes" class="pagina hidden">
+        <section class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 max-w-6xl">
+                <h2 class="font-display text-4xl md:text-5xl font-semibold text-center mb-8">AVALIAÇÕES</h2>
+                <div class="w-20 h-0.5 bg-bordeaux mx-auto mb-10"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                    <!-- ESQUERDA: formulário fixo na tela -->
+                    <div class="order-2 lg:order-1 lg:col-span-4 lg:sticky lg:top-40 lg:max-h-[calc(100vh-11rem)] lg:overflow-y-auto">
+                        <form id="form-avaliacao" class="bg-dark p-6 rounded-sm space-y-4" onsubmit="enviarAvaliacao(event)">
+                            <h3 class="font-display text-2xl font-semibold">Deixe a sua avaliação</h3>
+                            <p class="text-sm text-gray-400">Conte como foi o seu atendimento.</p>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Seu Nome</label>
+                                <input type="text" id="aval-nome" maxlength="60" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm focus:outline-none focus:border-bordeaux">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Sua Nota</label>
+                                <div id="estrelas-form" class="flex gap-2 text-3xl">
+                                    <button type="button" onclick="selecionarNota(1)" class="text-gray-600 hover:text-yellow-400 transition"><i class="fa fa-star"></i></button>
+                                    <button type="button" onclick="selecionarNota(2)" class="text-gray-600 hover:text-yellow-400 transition"><i class="fa fa-star"></i></button>
+                                    <button type="button" onclick="selecionarNota(3)" class="text-gray-600 hover:text-yellow-400 transition"><i class="fa fa-star"></i></button>
+                                    <button type="button" onclick="selecionarNota(4)" class="text-gray-600 hover:text-yellow-400 transition"><i class="fa fa-star"></i></button>
+                                    <button type="button" onclick="selecionarNota(5)" class="text-gray-600 hover:text-yellow-400 transition"><i class="fa fa-star"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Seu Comentário</label>
+                                <textarea rows="4" id="aval-comentario" maxlength="500" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm focus:outline-none focus:border-bordeaux"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition">ENVIAR AVALIAÇÃO</button>
+                            <p class="text-xs text-gray-500 text-center">Sua avaliação será publicada após a conferência da loja.</p>
+                        </form>
+                    </div>
+
+                    <!-- DIREITA: resumo e avaliações publicadas -->
+                    <div class="order-1 lg:order-2 lg:col-span-8">
+                        <div id="resumo-avaliacoes" class="mb-6"></div>
+                        <div id="lista-avaliacoes" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                        <div class="text-center mt-6">
+                            <button id="botao-mais-avaliacoes" type="button" onclick="mostrarMaisAvaliacoes()" class="hidden px-6 py-2 border border-bordeaux text-bordeaux rounded-sm text-sm font-semibold hover:bg-bordeaux hover:text-white transition">Ver mais avaliações</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== PAINEL DE CADASTRO DO CLIENTE (EXCLUSIVO VIA #gerenciar) ===== -->
+    <main id="pagina-gerenciar" class="pagina hidden">
+        <!-- ===== LOGIN DO PAINEL ===== -->
+        <section id="gerenciar-login" class="py-16 bg-darkest min-h-screen">
+            <div class="container mx-auto px-4 md:px-6 max-w-md">
+                <div class="text-center mb-8">
+                    <i class="fa fa-lock text-bordeaux text-4xl mb-4"></i>
+                    <h2 class="font-display text-3xl font-semibold text-cream">Área Restrita</h2>
+                    <p class="text-gray-400 text-sm mt-2">Entre com seu e-mail e senha para acessar o painel.</p>
+                </div>
+                <form onsubmit="entrarNoPainel(event)" class="bg-dark p-8 rounded-sm border border-gray-800 shadow-xl space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-300">E-mail</label>
+                        <input type="email" id="login-usuario" autocomplete="username" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Senha</label>
+                        <input type="password" id="login-senha" autocomplete="current-password" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                    </div>
+                    <p id="login-erro" class="text-sm text-red-500 hidden">E-mail ou senha incorretos.</p>
+                    <button type="submit" class="w-full bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition shadow-md">ENTRAR</button>
+                    <div class="text-center pt-2">
+                        <a href="#" onclick="mostrarSecao('inicio')" class="text-sm text-bordeaux hover:underline"><i class="fa fa-arrow-left"></i> Voltar ao site</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="gerenciar-painel" class="py-16 bg-darkest min-h-screen hidden">
+            <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="font-display text-3xl font-semibold text-cream">Painel Administrativo</h2>
+                    <button onclick="sairDoPainel()" class="text-sm text-bordeaux hover:underline"><i class="fa fa-arrow-left"></i> Sair do Painel</button>
+                </div>
+
+                <!-- Abas do painel -->
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <button id="tab-produtos" onclick="trocarAbaPainel('produtos')" class="px-5 py-2 border border-bordeaux bg-bordeaux text-white transition text-sm font-semibold"><i class="fa fa-cubes mr-2"></i>Produtos</button>
+                    <button id="tab-pedidos" onclick="trocarAbaPainel('pedidos')" class="px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm"><i class="fa fa-list-alt mr-2"></i>Pedidos Realizados <span id="badge-pedidos" class="hidden ml-1 bg-bordeaux text-white text-[10px] px-2 py-0.5 rounded-full"></span></button>
+                    <button id="tab-producao" onclick="trocarAbaPainel('producao')" class="px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm"><i class="fa fa-wrench mr-2"></i>Em Produção <span id="badge-producao" class="hidden ml-1 bg-bordeaux text-white text-[10px] px-2 py-0.5 rounded-full"></span></button>
+                    <button id="tab-aenviar" onclick="trocarAbaPainel('aenviar')" class="px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm"><i class="fa fa-cube mr-2"></i>Pedidos a Enviar <span id="badge-aenviar" class="hidden ml-1 bg-bordeaux text-white text-[10px] px-2 py-0.5 rounded-full"></span></button>
+                    <button id="tab-enviados" onclick="trocarAbaPainel('enviados')" class="px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm"><i class="fa fa-truck mr-2"></i>Pedidos Enviados</button>
+                    <button id="tab-avaliacoes" onclick="trocarAbaPainel('avaliacoes')" class="px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm"><i class="fa fa-star mr-2"></i>Avaliações <span id="badge-avaliacoes" class="hidden ml-1 bg-bordeaux text-white text-[10px] px-2 py-0.5 rounded-full"></span></button>
+                </div>
+
+                <div id="aba-produtos">
+
+                <!-- Layout em 2 colunas: Lado Esquerdo (Cadastro) | Lado Direito (Vitrine) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- LADO ESQUERDO: Formulário de Cadastro -->
+                    <div id="container-form-produto-admin" class="lg:col-span-5 bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 id="titulo-form-produto" class="text-xl font-semibold mb-6 text-cream border-b border-gray-700 pb-3"><i class="fa fa-plus-circle text-bordeaux mr-2"></i>Cadastrar Novo Produto</h3>
+                        <form id="form-produto-admin" onsubmit="salvarProdutoAdmin(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-300">Nome do Produto</label>
+                                <input type="text" id="novo-nome" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-gray-300">Orixá / Categoria</label>
+                                    <select id="novo-orixa" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux"><option value="">Selecione...</option></select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2 text-gray-300">Preço (R$)</label>
+                                    <input type="number" step="0.01" id="novo-preco" placeholder="89.90" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-300">Quantidade em Estoque</label>
+                                <input type="number" min="0" step="1" value="1" id="novo-estoque" required class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-300">Fotos do Produto (até 5)</label>
+                                <input type="file" id="novo-imagem-file" accept="image/*" multiple onchange="adicionarFotosProduto(this)" class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-bordeaux file:text-white hover:file:bg-red-700">
+                                <p class="text-xs text-gray-500 mt-1">As fotos serão otimizadas automaticamente. Para adicionar mais, selecione novamente.</p>
+                                <div id="previsualizacao-fotos-produto" class="grid grid-cols-3 sm:grid-cols-4 gap-3 mt-3"></div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2 text-gray-300">Descrição</label>
+                                <textarea id="novo-descricao" rows="10" wrap="soft" required placeholder="Separe os parágrafos com uma linha em branco." class="w-full min-h-64 resize-y overflow-y-auto whitespace-pre-wrap px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-base leading-relaxed text-white focus:outline-none focus:border-bordeaux"></textarea>
+                            </div>
+                            <div class="flex items-center justify-end gap-2 pt-1">
+                                <button id="botao-cancelar-edicao-produto" type="button" onclick="cancelarEdicaoProduto()" class="hidden w-auto border border-gray-600 px-3 py-2 text-xs text-gray-300 rounded-sm hover:border-bordeaux transition sm:px-5 sm:py-2.5 sm:text-sm"><span class="sm:hidden">Cancelar</span><span class="hidden sm:inline">Cancelar edição</span></button>
+                                <button id="botao-salvar-produto" type="submit" class="w-auto bg-bordeaux px-3 py-2 text-xs text-white rounded-sm font-semibold hover:bg-red-700 transition shadow-md sm:px-6 sm:py-2.5 sm:text-sm"><span id="texto-salvar-produto-desktop" class="hidden sm:inline">CADASTRAR PRODUTO</span><span id="texto-salvar-produto-mobile" class="sm:hidden">Cadastrar</span></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- LADO DIREITO: Vitrine de Entradas no Estoque -->
+                    <div class="lg:col-span-7 bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <div class="flex items-center justify-between border-b border-gray-700 pb-3 mb-6">
+                            <h3 class="text-xl font-semibold text-cream"><i class="fa fa-cubes text-bordeaux mr-2"></i>Produtos Cadastrados</h3>
+                            <span id="contador-produtos-painel" class="text-xs text-gray-400"></span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                            <input id="busca-produtos-admin" type="search" oninput="atualizarListaPainel()" placeholder="Buscar por nome..." class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux">
+                            <select id="filtro-categoria-produtos-admin" onchange="atualizarListaPainel()" class="w-full px-4 py-3 bg-darkest border border-gray-700 rounded-sm text-white focus:outline-none focus:border-bordeaux"><option value="Todas">Todas as seções</option></select>
+                        </div>
+                        
+                        <!-- Grid de Cards em formato de Vitrine -->
+                        <div id="lista-produtos-cadastrados" class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[700px] overflow-y-auto pr-2"></div>
+                    </div>
+
+                </div>
+                </div>
+
+                <!-- ABA: Pedidos Realizados -->
+                <div id="aba-pedidos" class="hidden">
+                    <div class="bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 class="text-xl font-semibold text-cream border-b border-gray-700 pb-3 mb-2"><i class="fa fa-list-alt text-bordeaux mr-2"></i>Pedidos Realizados</h3>
+                        <p class="text-sm text-gray-400 mb-6">Marque os itens que vão para a produção e clique em "Enviar para produção". O cliente é avisado no WhatsApp.</p>
+                        <div id="lista-pedidos" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- ABA: Em Produção -->
+                <div id="aba-producao" class="hidden">
+                    <div class="bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 class="text-xl font-semibold text-cream border-b border-gray-700 pb-3 mb-2"><i class="fa fa-wrench text-bordeaux mr-2"></i>Em Produção</h3>
+                        <p class="text-sm text-gray-400 mb-6">Itens que estão sendo produzidos. Marque os itens que ficaram prontos e encaminhe para Pedidos a Enviar.</p>
+                        <div id="lista-producao" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- ABA: Pedidos a Enviar -->
+                <div id="aba-aenviar" class="hidden">
+                    <div class="bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 class="text-xl font-semibold text-cream border-b border-gray-700 pb-3 mb-2"><i class="fa fa-cube text-bordeaux mr-2"></i>Pedidos a Enviar</h3>
+                        <p class="text-sm text-gray-400 mb-6">Itens prontos para envio. Marque os itens e encaminhe para Pedidos Enviados.</p>
+                        <div id="lista-aenviar" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- ABA: Pedidos Enviados -->
+                <div id="aba-enviados" class="hidden">
+                    <div class="bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 class="text-xl font-semibold text-cream border-b border-gray-700 pb-3 mb-2"><i class="fa fa-truck text-bordeaux mr-2"></i>Pedidos Enviados</h3>
+                        <p class="text-sm text-gray-400 mb-6">Marque os itens postados nos Correios, digite o código de rastreio e finalize. O cliente recebe o código no WhatsApp.</p>
+                        <h4 class="font-display text-lg text-cream mb-3">Aguardando código de rastreio</h4>
+                        <div id="lista-postados" class="space-y-6 mb-10"></div>
+                        <h4 class="font-display text-lg text-cream mb-3">Já enviados</h4>
+                        <div id="lista-enviados" class="space-y-6"></div>
+                    </div>
+                </div>
+
+                <!-- ABA: Avaliações -->
+                <div id="aba-avaliacoes" class="hidden">
+                    <div class="bg-dark p-6 md:p-8 rounded-sm border border-gray-800 shadow-xl">
+                        <h3 class="text-xl font-semibold text-cream border-b border-gray-700 pb-3 mb-2"><i class="fa fa-star text-bordeaux mr-2"></i>Avaliações dos Clientes</h3>
+                        <p class="text-sm text-gray-400 mb-6">Aprove para publicar na página Avaliações. Avaliações ocultas ou aguardando aprovação não aparecem no site.</p>
+                        <div id="lista-avaliacoes-painel" class="space-y-4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer class="py-5 bg-black text-center border-t border-white/20">
+        <div class="container mx-auto px-2">
+            <p class="font-display text-lg italic text-white mb-2 text-cream">Axé é vida, é proteção, é amor.</p>
+            <p class="text-xs text-gray-500 tracking-widest">ESPAÇO DE AXÉ - ATELIÊ</p>
+            <a href="https://www.instagram.com/espacodeaxe.atelie/" target="_blank" rel="noopener noreferrer" aria-label="Instagram do Espaço de Axé" class="inline-flex items-center gap-2 mt-3 text-sm text-cream hover:text-bordeaux transition"><i class="fa fa-instagram text-lg" aria-hidden="true"></i><span>Instagram</span></a>
+            <div class="mt-3 w-40 h-px bg-white/40 mx-auto"></div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+        let produtos = [];
+        let produtosCarregados = false;
+        let erroConexao = false;
+        let clienteNome = '';
+        let clienteTelefone = '';
+        let clienteTelefoneDigitado = '';
+        let avaliacoes = [];
+        let avaliacoesPainel = [];
+        let carrinho = [];
+        let total = 0;
+        let historicoSacolaAtivo = false;
+        let precoMaximo = 500;
+        let filtroOrixa = 'Todos';
+
+        // ===== FIREBASE =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8H3CgTZC0n1Qu0du-QOKo_gANtM9BCW4",
+            authDomain: "espaco-axe.firebaseapp.com",
+            projectId: "espaco-axe",
+            storageBucket: "espaco-axe.firebasestorage.app",
+            messagingSenderId: "680890433244",
+            appId: "1:680890433244:web:de7405863b43bbe2bb3e19"
+        };
+        let db = null;
+        let auth = null;
+        let cancelarPedidos = null;
+        let cancelarAvaliacoes = null;
+        let reconexaoPainelTimer = null;
+        let atrasoReconexaoPainel = 2000;
+
+        function iniciarFirebase() {
+            if (typeof firebase === 'undefined') {
+                erroConexao = true;
+                aplicarFiltros();
+                return;
+            }
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                // Evita atrasos nas atualizações em tempo real em redes que seguram conexões abertas
+                try { db.settings({ experimentalAutoDetectLongPolling: true, merge: true }); } catch (e) {}
+                try { db.enablePersistence({ synchronizeTabs: true }).catch(function() {}); } catch (e) {}
+                auth = firebase.auth();
+                try { auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(function() {}); } catch (e) {}
+            } catch (e) {
+                console.error(e);
+                erroConexao = true;
+                aplicarFiltros();
+                return;
+            }
+
+            // Produtos: atualizados em tempo real para todos os visitantes
+            db.collection('produtos').onSnapshot(function(snap) {
+                produtos = snap.docs.map(function(d) { return d.data(); });
+                produtos.forEach(function(p) { if (typeof p.estoque !== 'number') p.estoque = 0; });
+                produtos.sort(function(a, b) { return b.id - a.id; });
+                produtosCarregados = true;
+                erroConexao = false;
+                aplicarFiltros();
+                if (painelLogado()) atualizarListaPainel();
+            }, function(err) {
+                console.error(err);
+                produtosCarregados = true;
+                erroConexao = true;
+                aplicarFiltros();
+            });
+
+            // Avaliações aprovadas: públicas
+            db.collection('avaliacoes').where('aprovada', '==', true).onSnapshot(function(snap) {
+                avaliacoes = snap.docs.map(function(d) { return d.data(); });
+                avaliacoes.sort(function(a, b) { return b.id - a.id; });
+                renderizarAvaliacoes();
+            }, function(err) { console.error(err); });
+
+            // Pedidos e avaliações do painel: só são lidos quando a dona da loja está logada
+            auth.onAuthStateChanged(function(user) {
+                if (cancelarPedidos) { cancelarPedidos(); cancelarPedidos = null; }
+                if (cancelarAvaliacoes) { cancelarAvaliacoes(); cancelarAvaliacoes = null; }
+                pedidos = [];
+                avaliacoesPainel = [];
+                if (user) assinarPainel();
+                atualizarAcessoPainel();
+            });
+
+            // Ao voltar para a aba do navegador ou recuperar a internet, busca os dados de novo
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible' && painelLogado()) assinarPainel();
+            });
+            window.addEventListener('online', function() {
+                if (painelLogado()) assinarPainel();
+            });
+        }
+
+        // (Re)conecta a lista de pedidos e de avaliações do painel
+        function assinarPainel() {
+            if (reconexaoPainelTimer) {
+                clearTimeout(reconexaoPainelTimer);
+                reconexaoPainelTimer = null;
+            }
+            if (cancelarPedidos) { cancelarPedidos(); cancelarPedidos = null; }
+            if (cancelarAvaliacoes) { cancelarAvaliacoes(); cancelarAvaliacoes = null; }
+            if (!db || !painelLogado()) return;
+            cancelarPedidos = db.collection('pedidos').onSnapshot(function(snap) {
+                atrasoReconexaoPainel = 2000;
+                pedidos = snap.docs.map(function(d) { return d.data(); });
+                pedidos.forEach(normalizarPedido);
+                pedidos.sort(function(a, b) { return b.id - a.id; });
+                atualizarPedidosPainel();
+                atualizarAvaliacoesPainel();
+            }, function(err) {
+                console.error(err);
+                agendarReconexaoPainel(err);
+            });
+            cancelarAvaliacoes = db.collection('avaliacoes').onSnapshot(function(snap) {
+                atrasoReconexaoPainel = 2000;
+                avaliacoesPainel = snap.docs.map(function(d) { return d.data(); });
+                avaliacoesPainel.sort(function(a, b) { return b.id - a.id; });
+                atualizarAvaliacoesPainel();
+            }, function(err) {
+                console.error(err);
+                agendarReconexaoPainel(err);
+            });
+        }
+
+        function agendarReconexaoPainel(err) {
+            const errosTransitórios = ['aborted', 'deadline-exceeded', 'internal', 'unavailable'];
+            if (errosTransitórios.indexOf(err && err.code) === -1 || reconexaoPainelTimer || !painelLogado()) return;
+            reconexaoPainelTimer = setTimeout(function() {
+                reconexaoPainelTimer = null;
+                if (painelLogado()) assinarPainel();
+            }, atrasoReconexaoPainel);
+            atrasoReconexaoPainel = Math.min(atrasoReconexaoPainel * 2, 30000);
+        }
+
+        window.onload = function() {
+            renderizarProdutos(produtos);
+            popularCategorias();
+            verificarRotaHash();
+            const paginaInicial = window.location.hash === '#gerenciar'
+                ? 'gerenciar'
+                : window.location.hash === '#avaliacoes' ? 'avaliacoes' : 'inicio';
+            history.replaceState(Object.assign({}, history.state || {}, { pagina: paginaInicial }), '', window.location.href);
+            iniciarFirebase();
+            document.addEventListener('click', function(event) {
+                const link = event.target.closest('a[href="#"]');
+                if (link) event.preventDefault();
+            }, true);
+            window.addEventListener('hashchange', verificarRotaHash);
+            window.addEventListener('popstate', function(event) {
+                const estado = event.state || {};
+                historicoSacolaAtivo = !!estado.overlayCompra;
+                if (estado.overlayCompra === 'finalizacao') {
+                    document.getElementById('modal-dados-cliente').classList.remove('hidden');
+                    document.getElementById('modal-dados-cliente').classList.add('flex');
+                } else {
+                    fecharModalDados();
+                }
+                const carrinhoElemento = document.getElementById('carrinho');
+                const fundoCarrinho = document.getElementById('fundo-carrinho');
+                if (estado.overlayCompra) {
+                    if (carrinhoElemento) carrinhoElemento.classList.remove('translate-x-full');
+                    if (fundoCarrinho) fundoCarrinho.classList.remove('hidden');
+                } else {
+                    if (carrinhoElemento) carrinhoElemento.classList.add('translate-x-full');
+                    if (fundoCarrinho) fundoCarrinho.classList.add('hidden');
+                }
+                if (estado.pagina) mostrarSecao(estado.pagina, false);
+                if (estado.pagina === 'gerenciar') trocarAbaPainel(estado.abaPainel || 'produtos', false);
+            });
+        };
+
+        const CATEGORIAS = [["Malandros, Zé e Navalha", "Malandros, Zé e Navalha"], ["Iemanja e Marinheiros", "Iemanjá e Marinheiros"], ["Oxum, Nanã e Obá", "Oxum, Nanã e Obá"], ["Ossain, Oxumarê e Logunedé", "Ossain, Oxumarê e Logunedé"], ["Ogum", "Ogum"], ["Omolu e Obaluaê", "Omolu e Obaluaê"], ["Oxalá e 7 Linhas", "Oxalá e 7 Linhas"], ["Iansã e Xangô", "Iansã e Xangô"], ["Oxossi", "Oxossi"], ["Pretos Velho", "Pretos Velho"], ["Erês", "Erês"], ["Boiadeiros", "Boiadeiros"], ["Baianos", "Baianos"], ["Ciganos", "Ciganos"], ["Pombas Giras", "Pombas Giras"], ["Imagens de Gesso", "Imagens de Gesso"], ["Exus", "Exus"], ["Coités Personalizados", "Coités Personalizados"], ["Copos e Taças", "Copos e Taças"], ["Artigos Diversos", "Artigos Diversos"], ["Caboclos e Caboclas", "Caboclos e Caboclas"]];
+        CATEGORIAS.sort((a, b) => a[1].localeCompare(b[1], 'pt-BR'));
+
+        function popularCategorias() {
+            ['filtro-orixa', 'novo-orixa', 'filtro-categoria-produtos-admin'].forEach(id => {
+                const select = document.getElementById(id);
+                if (!select) return;
+                CATEGORIAS.forEach(([valor, rotulo]) => {
+                    const op = document.createElement('option');
+                    op.value = valor;
+                    op.textContent = rotulo;
+                    select.appendChild(op);
+                });
+            });
+        }
+
+        function imagensDoProduto(produto) {
+            if (Array.isArray(produto.imagens) && produto.imagens.length) return produto.imagens.filter(Boolean);
+            return produto.imagem ? [produto.imagem] : [];
+        }
+
+        function verificarRotaHash() {
+            if (window.location.hash === '#gerenciar') {
+                mostrarSecao('gerenciar', false);
+            } else if (window.location.hash === '#avaliacoes') {
+                mostrarSecao('avaliacoes', false);
+            }
+            const pagina = window.location.hash === '#gerenciar'
+                ? 'gerenciar'
+                : window.location.hash === '#avaliacoes' ? 'avaliacoes' : null;
+            if (pagina) history.replaceState(Object.assign({}, history.state || {}, { pagina: pagina }), '', window.location.href);
+        }
+
+        function abrirModalImagem(src, titulo) {
+            const modal = document.getElementById('modal-imagem');
+            const img = document.getElementById('imagem-modal-src');
+            const txt = document.getElementById('titulo-modal-txt');
+            if(modal && img && txt) {
+                img.src = src;
+                txt.textContent = titulo;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function fecharModalImagem() {
+            const modal = document.getElementById('modal-imagem');
+            if(modal) modal.classList.add('hidden');
+        }
+
+        function pedirNomeCliente() {
+            let mensagemPrompt = clienteNome 
+                ? `Seu nome atual nesta sessão é "${clienteNome}". Deseja alterar para:` 
+                : "Como gostaria de ser chamado(a)?";
+            
+            let novoNome = prompt(mensagemPrompt, clienteNome);
+            if (novoNome !== null) {
+                clienteNome = novoNome.trim();
+                if(clienteNome) {
+                    alert(`Pronto, ${clienteNome}! Seu nome foi salvo para esta sessão.`);
+                }
+            }
+        }
+
+        function gerarEstrelas(nota) {
+            let estrelas = '';
+            for(let i=1; i<=5; i++) {
+                estrelas += i <= nota 
+                    ? '<i class="fa fa-star star-filled"></i>' 
+                    : '<i class="fa fa-star star-empty"></i>';
+            }
+            return estrelas;
+        }
+        function formatarDescricaoProduto(descricao) {
+            const paragrafos = String(descricao || '').trim().split(/\n\s*\n/).map(function(texto) { return texto.trim(); }).filter(Boolean);
+            if (!paragrafos.length) return '<p class="text-gray-400">Descrição não informada.</p>';
+            return paragrafos.map(function(texto) {
+                return '<p class="mb-4 text-justify whitespace-pre-line leading-relaxed">' + escaparHtml(texto) + '</p>';
+            }).join('');
+        }
+
+        function renderizarProdutos(lista) {
+            const grade = document.getElementById('grade-produtos');
+            if(!grade) return;
+            grade.innerHTML = '';
+            if(lista.length === 0) {
+                const aviso = erroConexao
+                    ? 'Não foi possível carregar os produtos. Verifique sua internet e atualize a página.'
+                    : (!produtosCarregados ? 'Carregando produtos...' : 'Nenhum produto disponível no momento.');
+                grade.innerHTML = '<p class="col-span-full text-center text-gray-500 py-16">' + aviso + '</p>';
+                return;
+            }
+            lista.forEach(prod => {
+                const esgotado = prod.estoque <= 0;
+                const nomeSeguro = escaparHtml(prod.nome || 'Produto');
+                const orixaSeguro = escaparHtml(prod.orixa || '');
+                const imagens = imagensDoProduto(prod);
+                const imagemCapa = imagens[0] || prod.imagem || '';
+                grade.innerHTML += `
+                    <div class="bg-dark rounded-sm overflow-hidden group hover:shadow-xl transition flex flex-col justify-between">
+                        <div>
+                            <img src="${imagemCapa}" alt="${nomeSeguro}" class="w-full h-auto max-h-96 object-contain block cursor-pointer" onclick="verProduto(${prod.id})">
+                            <div class="p-5">
+                                <span class="text-xs text-bordeaux uppercase tracking-wider">${orixaSeguro}</span>
+                                <h3 class="font-semibold text-lg mt-1 cursor-pointer hover:text-bordeaux" onclick="verProduto(${prod.id})">${nomeSeguro}</h3>
+                                <div class="mt-1">${gerarEstrelas(prod.avaliacao || 5)}</div>
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="flex flex-wrap items-baseline gap-x-2">
+                                        <p class="text-xl font-bold">R$ ${prod.preco.toFixed(2).replace('.',',')}</p>
+                                        <span class="text-xs text-gray-400">+ Frete a Consultar</span>
+                                    </div>
+                                    ${esgotado ? '' : `<div class="flex h-12 w-28 shrink-0 items-center justify-between border border-gray-600 rounded-sm overflow-hidden bg-darkest">
+                                        <button onclick="alterarQtdCard(${prod.id}, -1)" aria-label="Diminuir quantidade" class="inline-flex h-full w-9 shrink-0 items-center justify-center px-0 text-base text-gray-300 hover:bg-gray-800 transition">-</button>
+                                        <span id="qtd-card-${prod.id}" class="inline-flex w-8 shrink-0 items-center justify-center text-base font-semibold text-white">1</span>
+                                        <button onclick="alterarQtdCard(${prod.id}, 1)" aria-label="Aumentar quantidade" class="inline-flex h-full w-9 shrink-0 items-center justify-center px-0 text-base text-gray-300 hover:bg-gray-800 transition">+</button>
+                                    </div>`}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5">
+                            ${esgotado
+                                ? `<p class="text-center text-xs font-bold tracking-widest text-bordeaux border border-bordeaux rounded-sm py-1 mb-2">SOB ENCOMENDA</p>
+                                   <button onclick="encomendarProduto(${prod.id})" class="w-full bg-bordeaux text-white py-2 rounded-sm font-semibold text-sm hover:bg-red-700 transition"><i class="fa fa-whatsapp mr-2"></i>ENCOMENDAR NO WHATSAPP</button>`
+                                : `<button onclick="adicionarComQuantidade(${prod.id})" class="w-full bg-bordeaux text-white py-2 rounded-sm font-semibold hover:bg-red-700 transition">ADICIONAR</button>`}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        const LIMITE_POR_PRODUTO = 2;
+
+        function alterarQtdCard(id, delta) {
+            const span = document.getElementById(`qtd-card-${id}`);
+            if(!span) return;
+            let atual = parseInt(span.textContent) + delta;
+            const prod = produtos.find(p => p.id === id);
+            if(prod && atual > Math.min(prod.estoque, LIMITE_POR_PRODUTO)) {
+                alert(prod.estoque < LIMITE_POR_PRODUTO
+                    ? 'Temos apenas ' + prod.estoque + ' unidade(s) em estoque deste produto.'
+                    : 'Limite de ' + LIMITE_POR_PRODUTO + ' unidades por produto por cliente.');
+                atual = Math.max(1, Math.min(prod.estoque, LIMITE_POR_PRODUTO));
+            }
+            if(atual < 1) atual = 1;
+            span.textContent = atual;
+        }
+
+        function adicionarComQuantidade(id) {
+            const span = document.getElementById(`qtd-card-${id}`);
+            let qtd = span ? parseInt(span.textContent) : 1;
+
+            const prodEstoque = produtos.find(p => p.id === id);
+            if (!prodEstoque) return;
+            const { nome, preco } = prodEstoque;
+            const imagem = imagensDoProduto(prodEstoque)[0] || prodEstoque.imagem;
+            if (prodEstoque) {
+                const noCarrinho = carrinho.filter(i => i.id === id).length;
+                const limite = Math.min(prodEstoque.estoque, LIMITE_POR_PRODUTO);
+                const disponivel = limite - noCarrinho;
+                if (disponivel <= 0) {
+                    if (prodEstoque.estoque <= 0) {
+                        alert('Este produto está sob encomenda. Use o botão Encomendar no WhatsApp.');
+                        aplicarFiltros();
+                    } else if (noCarrinho >= LIMITE_POR_PRODUTO) {
+                        alert('Limite de ' + LIMITE_POR_PRODUTO + ' unidades por produto por cliente.');
+                    } else {
+                        alert('Você já adicionou todas as unidades disponíveis deste produto.');
+                    }
+                    return;
+                }
+                if (qtd > disponivel) {
+                    alert(disponivel < LIMITE_POR_PRODUTO - noCarrinho || prodEstoque.estoque < LIMITE_POR_PRODUTO
+                        ? `Temos apenas ${disponivel} unidade(s) disponível(is) para adicionar.`
+                        : `O limite é de ${LIMITE_POR_PRODUTO} unidades por produto por cliente. Foi adicionado o que ainda cabia na sacola.`);
+                    qtd = disponivel;
+                }
+            }
+            
+            for(let i = 0; i < qtd; i++) {
+                carrinho.push({id, nome, preco, imagem});
+                total += preco;
+            }
+            
+            if(span) span.textContent = '1';
+
+            atualizarCarrinho();
+            abrirCarrinho();
+        }
+
+        function filtrarPorOrixa(nome) {
+            filtroOrixa = nome;
+            atualizarEstiloBotoesFiltro();
+            aplicarFiltros();
+        }
+
+        function atualizarEstiloBotoesFiltro() {
+            const select = document.getElementById('filtro-orixa');
+            if (select) select.value = filtroOrixa;
+        }
+
+        function atualizarPrecoMax(valor) {
+            precoMaximo = parseInt(valor);
+            const spanPreco = document.getElementById('valor-preco');
+            if(spanPreco) spanPreco.textContent = `Até R$ ${precoMaximo}`;
+            aplicarFiltros();
+        }
+
+        function aplicarFiltros() {
+            let filtrado = produtos;
+            if(filtroOrixa !== 'Todos') {
+                filtrado = filtrado.filter(p => p.orixa.toLowerCase().trim() === filtroOrixa.toLowerCase().trim());
+            }
+            filtrado = filtrado.filter(p => p.preco <= precoMaximo);
+            renderizarProdutos(filtrado);
+        }
+
+        function buscarProdutos(termo) {
+            const caixa = document.getElementById('resultados-busca');
+            if(!caixa) return;
+            if(termo.length < 2) {
+                caixa.classList.add('hidden');
+                return;
+            }
+            const resultado = produtos.filter(p => 
+                p.nome.toLowerCase().includes(termo.toLowerCase()) || 
+                p.orixa.toLowerCase().includes(termo.toLowerCase())
+            );
+            caixa.classList.remove('hidden');
+            caixa.innerHTML = resultado.length === 0 
+                ? '<p class="text-gray-500 p-2">Nenhum produto encontrado.</p>'
+                : `<div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-4">${resultado.map(p => `
+                    <div class="bg-dark p-3 rounded-sm cursor-pointer" onclick="verProduto(${p.id}); fecharBusca();">
+                        <img src="${imagemCapa}" class="w-full h-32 object-contain rounded-sm mb-2" alt="${nomeSeguro}">
+                        <p class="font-semibold text-sm text-white">${nomeSeguro}</p>
+                        <p class="text-xs text-bordeaux">${orixaSeguro}</p>
+                        <p class="text-sm font-bold">R$ ${p.preco.toFixed(2).replace('.',',')}</p>
+                    </div>
+                `).join('')}</div>`;
+        }
+
+        function verProduto(id) {
+            const prod = produtos.find(p => p.id === id);
+            const conteudo = document.getElementById('conteudo-produto-detalhe');
+            if(!prod || !conteudo) return;
+            const nomeSeguro = escaparHtml(prod.nome || 'Produto');
+            const orixaSeguro = escaparHtml(prod.orixa || '');
+            const imagens = imagensDoProduto(prod);
+            const imagemCapa = imagens[0] || prod.imagem || '';
+            conteudo.innerHTML = `
+                <div>
+                    <img id="imagem-produto-principal" src="${imagemCapa}" alt="${nomeSeguro}" class="w-full h-auto max-h-[36rem] object-contain rounded-sm shadow-lg">
+                    ${imagens.length > 1 ? `<div class="flex flex-wrap gap-2 mt-4">${imagens.map((imagem, indice) => `<button type="button" onclick="selecionarImagemProduto(${Number(prod.id)}, ${indice})" class="w-16 h-16 border border-gray-700 hover:border-bordeaux rounded-sm overflow-hidden" aria-label="Ver foto ${indice + 1} de ${imagens.length}"><img src="${imagem}" alt="" class="w-full h-full object-cover"></button>`).join('')}</div>` : ''}
+                </div>
+                <div>
+                    <span class="text-sm text-bordeaux uppercase tracking-wider">${orixaSeguro}</span>
+                    <h2 class="font-display text-4xl font-semibold mt-2 mb-3">${nomeSeguro}</h2>
+                    <div class="mb-4">${gerarEstrelas(prod.avaliacao || 5)} <span class="text-sm text-gray-400">(${prod.avaliacao || 5}/5)</span></div>
+                    <p class="text-3xl font-bold mb-6">R$ ${prod.preco.toFixed(2).replace('.',',')}</p>
+                    <div class="text-gray-300 mb-8">${formatarDescricaoProduto(prod.descricao)}</div>
+                    <div class="flex gap-4">
+                        ${prod.estoque <= 0
+                            ? `<div class="flex-1">
+                                <p class="text-center text-sm font-bold tracking-widest text-bordeaux border border-bordeaux rounded-sm py-2 mb-3">SOB ENCOMENDA</p>
+                                <button onclick="encomendarProduto(${prod.id})" class="w-full bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition"><i class="fa fa-whatsapp mr-2"></i>ENCOMENDAR NO WHATSAPP</button>
+                            </div>`
+                            : `<button onclick="adicionarComQuantidade(${prod.id})" class="flex-1 bg-bordeaux text-white py-3 rounded-sm font-semibold hover:bg-red-700 transition">ADICIONAR À SACOLA</button>`}
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-700">
+                        <p class="text-sm text-gray-400 mb-2"><i class="fa fa-check text-bordeaux mr-2"></i> Envio seguro para todo o Brasil</p>
+                        <p class="text-sm text-gray-400 mb-2"><i class="fa fa-check text-bordeaux mr-2"></i> Feito à mão com muito axé</p>
+                        <p class="text-sm text-gray-400"><i class="fa fa-check text-bordeaux mr-2"></i> Compra 100% segura</p>
+                    </div>
+                </div>
+            `;
+            mostrarSecao('produto-detalhe');
+        }
+        function selecionarImagemProduto(id, indice) {
+            const produto = produtos.find(function(item) { return String(item.id) === String(id); });
+            const imagem = document.getElementById('imagem-produto-principal');
+            const imagens = produto ? imagensDoProduto(produto) : [];
+            if (imagem && imagens[indice]) imagem.src = imagens[indice];
+        }
+
+        function alternarMenuMobile() {
+            const menu = document.getElementById('menu-mobile');
+            const icone = document.getElementById('icone-menu');
+            const botao = document.getElementById('botao-menu');
+            if (!menu) return;
+            const abrir = menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !abrir);
+            if (icone) icone.className = abrir ? 'fa fa-times text-black' : 'fa fa-bars text-black';
+            if (botao) botao.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+        }
+
+        function fecharMenuMobile() {
+            const menu = document.getElementById('menu-mobile');
+            const icone = document.getElementById('icone-menu');
+            const botao = document.getElementById('botao-menu');
+            if (menu) menu.classList.add('hidden');
+            if (icone) icone.className = 'fa fa-bars text-black';
+            if (botao) botao.setAttribute('aria-expanded', 'false');
+        }
+
+        function mostrarSecao(pagina, registrarHistorico) {
+            if (registrarHistorico !== false && (!history.state || history.state.pagina !== pagina)) {
+                history.pushState(Object.assign({}, history.state || {}, { pagina: pagina }), '', window.location.pathname + window.location.search);
+            }
+            fecharMenuMobile();
+            if (pagina !== 'produtos') {
+                filtroOrixa = 'Todos';
+                precoMaximo = 500;
+                const rangerPreco = document.getElementById('filtro-preco');
+                const spanPreco = document.getElementById('valor-preco');
+                if (rangerPreco) rangerPreco.value = 500;
+                if (spanPreco) spanPreco.textContent = 'Até R$ 500';
+                atualizarEstiloBotoesFiltro();
+                renderizarProdutos(produtos);
+            }
+
+            document.querySelectorAll('.pagina').forEach(p => p.classList.add('hidden'));
+            const target = document.getElementById('pagina-' + pagina);
+            if(target) target.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-bordeaux','font-semibold','border-b-2','border-bordeaux','pb-1');
+                if(link.dataset.page === pagina) {
+                    link.classList.add('text-bordeaux','font-semibold','border-b-2','border-bordeaux','pb-1');
+                }
+            });
+            window.scrollTo(0,0);
+            if (pagina === 'gerenciar') {
+                atualizarAcessoPainel();
+                if (painelLogado()) assinarPainel();
+                trocarAbaPainel(history.state && history.state.abaPainel || 'produtos', false);
+            }
+        }
+
+        let salvandoProduto = false;
+        let produtoEditandoId = null;
+        let fotosProdutoAtuais = [];
+        let novosArquivosProduto = [];
+        const MAX_IMAGENS_PRODUTO = 5;
+        const MAX_TAMANHO_FOTOS_PRODUTO = 400000;
+
+        function renderizarPrevisualizacaoFotosProduto() {
+            const container = document.getElementById('previsualizacao-fotos-produto');
+            if (!container) return;
+            container.innerHTML = '';
+            const fotos = fotosProdutoAtuais.map((src, index) => ({ src, tipo: 'atual', index }))
+                .concat(novosArquivosProduto.map((item, index) => ({ src: item.url, tipo: 'novo', index })));
+            fotos.forEach(function(foto) {
+                const quadro = document.createElement('div');
+                quadro.className = 'relative min-w-0';
+                const imagem = document.createElement('img');
+                imagem.src = foto.src;
+                imagem.alt = 'Foto do produto';
+                imagem.className = 'w-full aspect-square object-cover rounded-sm border border-gray-700';
+                const botao = document.createElement('button');
+                botao.type = 'button';
+                botao.textContent = 'Remover';
+                botao.className = 'mt-1 w-full text-xs text-red-400 hover:text-red-300';
+                botao.onclick = function() { removerFotoProduto(foto.tipo, foto.index); };
+                quadro.appendChild(imagem);
+                quadro.appendChild(botao);
+                container.appendChild(quadro);
+            });
+        }
+
+        function adicionarFotosProduto(input) {
+            const arquivos = Array.from(input.files || []);
+            const vagas = MAX_IMAGENS_PRODUTO - fotosProdutoAtuais.length - novosArquivosProduto.length;
+            if (arquivos.length > vagas) alert('É possível cadastrar até ' + MAX_IMAGENS_PRODUTO + ' fotos por produto.');
+            arquivos.slice(0, Math.max(0, vagas)).forEach(function(arquivo) {
+                novosArquivosProduto.push({ file: arquivo, url: URL.createObjectURL(arquivo) });
+            });
+            input.value = '';
+            renderizarPrevisualizacaoFotosProduto();
+        }
+
+        function removerFotoProduto(tipo, indice) {
+            if (tipo === 'atual') fotosProdutoAtuais.splice(indice, 1);
+            else {
+                const removida = novosArquivosProduto.splice(indice, 1)[0];
+                if (removida) URL.revokeObjectURL(removida.url);
+            }
+            renderizarPrevisualizacaoFotosProduto();
+        }
+
+        function limparNovasFotosProduto() {
+            novosArquivosProduto.forEach(function(item) { URL.revokeObjectURL(item.url); });
+            novosArquivosProduto = [];
+        }
+
+        function atualizarModoFormularioProduto(editando) {
+            document.getElementById('titulo-form-produto').innerHTML = editando
+                ? '<i class="fa fa-pencil text-bordeaux mr-2"></i>Editar Produto'
+                : '<i class="fa fa-plus-circle text-bordeaux mr-2"></i>Cadastrar Novo Produto';
+            document.getElementById('texto-salvar-produto-desktop').textContent = editando ? 'SALVAR ALTERAÇÕES' : 'CADASTRAR PRODUTO';
+            document.getElementById('texto-salvar-produto-mobile').textContent = editando ? 'Salvar' : 'Cadastrar';
+            document.getElementById('botao-cancelar-edicao-produto').classList.toggle('hidden', !editando);
+        }
+
+        function editarProduto(id) {
+            const produto = produtos.find(function(item) { return String(item.id) === String(id); });
+            if (!produto) return;
+            limparNovasFotosProduto();
+            produtoEditandoId = produto.id;
+            fotosProdutoAtuais = imagensDoProduto(produto);
+            document.getElementById('novo-nome').value = produto.nome || '';
+            document.getElementById('novo-orixa').value = produto.orixa || '';
+            document.getElementById('novo-preco').value = produto.preco || '';
+            document.getElementById('novo-estoque').value = Number.isFinite(produto.estoque) ? produto.estoque : 0;
+            document.getElementById('novo-descricao').value = produto.descricao || '';
+            atualizarModoFormularioProduto(true);
+            renderizarPrevisualizacaoFotosProduto();
+            const modal = document.getElementById('modal-descricao-admin');
+            if (modal && !modal.classList.contains('hidden')) {
+                const container = document.getElementById('container-form-produto-admin');
+                let placeholder = document.getElementById('placeholder-form-produto-admin');
+                if (!placeholder) {
+                    placeholder = document.createElement('div');
+                    placeholder.id = 'placeholder-form-produto-admin';
+                    placeholder.className = 'lg:col-span-5';
+                    container.parentNode.insertBefore(placeholder, container);
+                }
+                container.dataset.classOriginal = container.className;
+                container.className = 'w-full';
+                document.getElementById('titulo-form-produto').classList.add('hidden');
+                document.getElementById('slot-form-produto-admin').appendChild(container);
+                document.getElementById('conteudo-descricao-admin').classList.add('hidden');
+                document.getElementById('editor-produto-modal').classList.remove('hidden');
+                document.getElementById('footer-descricao-admin').classList.add('hidden');
+                document.getElementById('titulo-descricao-admin').textContent = 'Editar produto';
+                modal.dataset.modo = 'editar';
+                document.getElementById('editor-produto-modal').scrollTop = 0;
+            } else {
+                document.getElementById('form-produto-admin').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function cancelarEdicaoProduto() {
+            limparNovasFotosProduto();
+            fotosProdutoAtuais = [];
+            produtoEditandoId = null;
+            document.getElementById('form-produto-admin').reset();
+            document.getElementById('novo-estoque').value = 1;
+            atualizarModoFormularioProduto(false);
+            renderizarPrevisualizacaoFotosProduto();
+            restaurarFormularioProdutoNoModal();
+        }
+
+        function restaurarFormularioProdutoNoModal() {
+            const modal = document.getElementById('modal-descricao-admin');
+            if (!modal || modal.dataset.modo !== 'editar') return;
+            const container = document.getElementById('container-form-produto-admin');
+            const placeholder = document.getElementById('placeholder-form-produto-admin');
+            if (placeholder && placeholder.parentNode) {
+                placeholder.parentNode.insertBefore(container, placeholder);
+                placeholder.remove();
+            }
+            if (container.dataset.classOriginal) {
+                container.className = container.dataset.classOriginal;
+                delete container.dataset.classOriginal;
+            }
+            document.getElementById('titulo-form-produto').classList.remove('hidden');
+            document.getElementById('editor-produto-modal').classList.add('hidden');
+            document.getElementById('conteudo-descricao-admin').classList.remove('hidden');
+            document.getElementById('footer-descricao-admin').classList.remove('hidden');
+            const produto = produtos.find(function(item) { return String(item.id) === String(modal.dataset.produtoId); });
+            document.getElementById('titulo-descricao-admin').textContent = produto ? (produto.nome || 'Descrição do produto') : 'Descrição do produto';
+            document.getElementById('conteudo-descricao-admin').textContent = produto ? (produto.descricao || 'Descrição não informada.') : 'Descrição não informada.';
+            modal.dataset.modo = 'descricao';
+        }
+
+        async function salvarProdutoAdmin(event) {
+            event.preventDefault();
+            if (salvandoProduto) return;
+            if (!db) { alert('Sem conexão com o servidor. Verifique a internet e atualize a página.'); return; }
+            const nome = document.getElementById('novo-nome').value.trim();
+            const orixa = document.getElementById('novo-orixa').value;
+            const preco = parseFloat(document.getElementById('novo-preco').value);
+            const descricao = document.getElementById('novo-descricao').value.trim();
+            const estoque = Math.max(0, parseInt(document.getElementById('novo-estoque').value) || 0);
+            if (!fotosProdutoAtuais.length && !novosArquivosProduto.length) { alert('Adicione ao menos uma foto para o produto.'); return; }
+            if (fotosProdutoAtuais.length + novosArquivosProduto.length > MAX_IMAGENS_PRODUTO) { alert('É possível cadastrar até ' + MAX_IMAGENS_PRODUTO + ' fotos por produto.'); return; }
+            const produtoAnterior = produtoEditandoId ? produtos.find(function(item) { return String(item.id) === String(produtoEditandoId); }) : null;
+            const imagensOriginais = produtoAnterior ? imagensDoProduto(produtoAnterior) : [];
+            const fotosInalteradas = !!produtoAnterior && novosArquivosProduto.length === 0 && fotosProdutoAtuais.length === imagensOriginais.length && fotosProdutoAtuais.every(function(foto, indice) { return foto === imagensOriginais[indice]; });
+
+            salvandoProduto = true;
+            const botao = document.getElementById('botao-salvar-produto');
+            botao.disabled = true;
+            try {
+                let imagens = fotosProdutoAtuais.slice();
+                if (novosArquivosProduto.length) {
+                    const tamanhoAtual = imagens.reduce(function(total, foto) { return total + foto.length; }, 0);
+                    const espacoRestante = MAX_TAMANHO_FOTOS_PRODUTO - tamanhoAtual;
+                    if (espacoRestante < novosArquivosProduto.length * 12000) throw new Error('FOTOS_GRANDES');
+                    const limitePorFoto = Math.floor(espacoRestante / novosArquivosProduto.length);
+                    const fotosNovas = await Promise.all(novosArquivosProduto.map(function(item) { return comprimirImagem(item.file, limitePorFoto); }));
+                    if (fotosNovas.some(function(foto) { return !foto; })) throw new Error('FOTOS_GRANDES');
+                    imagens = imagens.concat(fotosNovas);
+                }
+                if (!fotosInalteradas && imagens.reduce(function(total, foto) { return total + foto.length; }, 0) > MAX_TAMANHO_FOTOS_PRODUTO) throw new Error('FOTOS_GRANDES');
+                const id = produtoEditandoId || Date.now();
+                const novoProduto = {
+                    id: id,
+                    nome: nome,
+                    orixa: orixa,
+                    preco: preco,
+                    avaliacao: produtoAnterior ? (produtoAnterior.avaliacao || 5) : 5,
+                    descricao: descricao,
+                    estoque: estoque
+                };
+                if (!fotosInalteradas) {
+                    novoProduto.imagem = imagens[0];
+                    novoProduto.imagens = imagens;
+                }
+                await db.collection('produtos').doc(String(id)).set(novoProduto, { merge: true });
+                const produtoSalvo = produtoAnterior ? Object.assign({}, produtoAnterior, novoProduto) : novoProduto;
+                const indiceProduto = produtos.findIndex(function(item) { return String(item.id) === String(id); });
+                if (indiceProduto >= 0) produtos[indiceProduto] = produtoSalvo;
+                else produtos.push(produtoSalvo);
+                atualizarListaPainel();
+                alert(produtoAnterior ? 'Produto atualizado com sucesso!' : 'Produto cadastrado com sucesso!');
+                cancelarEdicaoProduto();
+            } catch (e) {
+                console.error(e);
+                alert(e && e.message === 'FOTOS_GRANDES'
+                    ? 'As fotos excedem o limite de armazenamento do produto. Remova uma foto ou selecione imagens menores.'
+                    : (e && e.code === 'permission-denied'
+                        ? 'Sem permissão para salvar. Saia do painel e entre novamente.'
+                        : 'Não foi possível salvar o produto. Verifique a internet e tente novamente.'));
+            } finally {
+                salvandoProduto = false;
+                botao.disabled = false;
+            }
+        }
+
+        function comprimirImagem(arquivo, limite) {
+            return new Promise(function(resolve) {
+                const leitor = new FileReader();
+                leitor.onerror = function() { resolve(null); };
+                leitor.onload = function(e) {
+                    const img = new Image();
+                    img.onerror = function() { resolve(null); };
+                    img.onload = function() {
+                        function gerar(max, qualidade) {
+                            let w = img.width, h = img.height;
+                            if (w > max || h > max) {
+                                const r = Math.min(max / w, max / h);
+                                w = Math.round(w * r);
+                                h = Math.round(h * r);
+                            }
+                            const canvas = document.createElement('canvas');
+                            canvas.width = w;
+                            canvas.height = h;
+                            const ctx = canvas.getContext('2d');
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillRect(0, 0, w, h);
+                            ctx.drawImage(img, 0, 0, w, h);
+                            return canvas.toDataURL('image/jpeg', qualidade);
+                        }
+                        const tentativas = [[800, 0.72], [600, 0.58], [450, 0.48], [320, 0.4]];
+                        for (const [tamanho, qualidade] of tentativas) {
+                            const resultado = gerar(tamanho, qualidade);
+                            if (resultado.length <= limite) { resolve(resultado); return; }
+                        }
+                        resolve(null);
+                    };
+                    img.src = e.target.result;
+                };
+                leitor.readAsDataURL(arquivo);
+            });
+        }
+
+        function atualizarListaPainel() {
+            const listaDiv = document.getElementById('lista-produtos-cadastrados');
+            if(!listaDiv) return;
+            const todosProdutos = produtos.slice().sort(function(a, b) { return String(a.nome || '').localeCompare(String(b.nome || ''), 'pt-BR'); });
+            const categoria = document.getElementById('filtro-categoria-produtos-admin');
+            const busca = document.getElementById('busca-produtos-admin');
+            const categoriaSelecionada = categoria ? categoria.value : 'Todas';
+            const termo = busca ? busca.value.trim().toLocaleLowerCase('pt-BR') : '';
+            const encontrados = todosProdutos.filter(function(produto) {
+                const correspondeCategoria = categoriaSelecionada === 'Todas' || produto.orixa === categoriaSelecionada;
+                const texto = (String(produto.nome || '') + ' ' + String(produto.orixa || '')).toLocaleLowerCase('pt-BR');
+                return correspondeCategoria && (!termo || texto.includes(termo));
+            });
+            const contador = document.getElementById('contador-produtos-painel');
+            if (contador) contador.textContent = encontrados.length + ' de ' + todosProdutos.length + ' produtos';
+            if(encontrados.length === 0) {
+                listaDiv.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-500 border border-dashed border-gray-800 rounded-sm">
+                        <i class="fa fa-tag text-3xl mb-2 text-gray-600"></i>
+                        <p class="text-sm">Nenhum produto encontrado nesta busca.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listaDiv.innerHTML = encontrados.map(p => {
+                const imagens = imagensDoProduto(p);
+                const imagem = imagens[0] || '';
+                const nomeSeguro = escaparHtml(p.nome || 'Produto');
+                const orixaSeguro = escaparHtml(p.orixa || '');
+                const descricaoSegura = escaparHtml(p.descricao || '');
+                return `
+                    <div class="bg-darkest rounded-sm border border-gray-800 overflow-hidden flex flex-col justify-between shadow-md relative group">
+                        <div>
+                            <div class="relative w-full overflow-hidden">
+                                <img src="${imagem}" alt="${nomeSeguro}" class="w-full h-auto max-h-64 object-contain block">
+                                <span class="absolute top-2 left-2 bg-bordeaux/90 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-xs">${imagens.length} ${imagens.length === 1 ? 'foto' : 'fotos'}</span>
+                            </div>
+                            <div class="p-4">
+                                <span class="text-xs text-bordeaux font-semibold uppercase tracking-wider">${orixaSeguro}</span>
+                                <h4 class="font-semibold text-base text-white mt-1">${nomeSeguro}</h4>
+                                <button type="button" data-acao-produto="descricao" data-produto-id="${escaparHtml(String(p.id))}" class="mt-2 text-left text-xs text-bordeaux hover:underline">Ver descrição completa</button>
+                                <div class="flex items-center gap-2 mt-3">
+                                    <span class="text-xs ${p.estoque <= 0 ? 'text-red-400 font-semibold' : 'text-gray-400'}">${p.estoque <= 0 ? 'Sob encomenda' : 'Estoque:'}</span>
+                                    <input type="number" min="0" step="1" id="estoque-${p.id}" value="${p.estoque}" class="w-20 px-2 py-1 bg-dark border border-gray-700 rounded-sm text-white text-sm focus:outline-none focus:border-bordeaux">
+                                    <button onclick="atualizarEstoque(${p.id})" class="text-xs bg-bordeaux text-white px-3 py-1 rounded-sm hover:bg-red-700 transition">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 pt-0 flex items-center justify-between border-t border-gray-800/80 mt-2">
+                            <span class="text-lg font-bold text-cream">R$ ${p.preco.toFixed(2).replace('.',',')}</span>
+                            <div class="flex items-center gap-2">
+                                <button type="button" data-acao-produto="editar" data-produto-id="${escaparHtml(String(p.id))}" class="text-bordeaux hover:text-red-400 text-sm p-2 rounded hover:bg-red-950/30 transition" title="Editar produto"><i class="fa fa-pencil"></i> Editar</button>
+                                <button type="button" data-acao-produto="excluir" data-produto-id="${escaparHtml(String(p.id))}" class="text-red-500 hover:text-red-400 text-sm p-2 rounded hover:bg-red-950/30 transition" title="Excluir produto"><i class="fa fa-trash"></i> Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            listaDiv.querySelectorAll('[data-acao-produto]').forEach(function(botao) {
+                botao.addEventListener('click', function() {
+                    if (botao.dataset.acaoProduto === 'editar') editarProduto(botao.dataset.produtoId);
+                    else if (botao.dataset.acaoProduto === 'excluir') removerProduto(botao.dataset.produtoId);
+                    else if (botao.dataset.acaoProduto === 'descricao') abrirModalDescricaoProduto(botao.dataset.produtoId);
+                });
+            });
+        }
+
+        function abrirModalDescricaoProduto(id) {
+            const produto = produtos.find(function(item) { return String(item.id) === String(id); });
+            if (!produto) return;
+            const modal = document.getElementById('modal-descricao-admin');
+            modal.dataset.produtoId = String(produto.id);
+            modal.dataset.modo = 'descricao';
+            document.getElementById('titulo-descricao-admin').textContent = produto.nome || 'Descrição do produto';
+            document.getElementById('conteudo-descricao-admin').textContent = produto.descricao || 'Descrição não informada.';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function fecharModalDescricaoProduto() {
+            const modal = document.getElementById('modal-descricao-admin');
+            if (!modal) return;
+            if (modal.dataset.modo === 'editar') cancelarEdicaoProduto();
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function editarProdutoDaDescricao() {
+            const modal = document.getElementById('modal-descricao-admin');
+            const id = modal.dataset.produtoId;
+            editarProduto(id);
+        }
+
+        async function removerProduto(id) {
+            if (!confirm("Deseja realmente excluir este produto?")) return;
+            try {
+                await db.collection('produtos').doc(String(id)).delete();
+                if (String(produtoEditandoId) === String(id)) cancelarEdicaoProduto();
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível excluir o produto. Verifique a internet e tente novamente.');
+            }
+        }
+
+        function removerDoCarrinho(indice) {
+            total -= carrinho[indice].preco;
+            carrinho.splice(indice, 1);
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const contador = document.getElementById('contador-carrinho');
+            const spanTotal = document.getElementById('total-carrinho');
+            const lista = document.getElementById('lista-carrinho');
+            
+            if(contador) contador.textContent = carrinho.length;
+            if(spanTotal) spanTotal.textContent = 'R$ ' + total.toFixed(2).replace('.',',');
+            
+            if(!lista) return;
+            if(carrinho.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center py-10">Sua sacola está vazia</p>';
+            } else {
+                lista.innerHTML = carrinho.map((item, i) => `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.imagem}" class="w-12 h-12 object-contain bg-white rounded-sm border border-gray-300">
+                            <div>
+                                <p class="font-semibold text-black text-sm">${item.nome}</p>
+                                <p class="text-xs text-gray-600">R$ ${item.preco.toFixed(2).replace('.',',')}</p>
+                            </div>
+                        </div>
+                        <button onclick="removerDoCarrinho(${i})" class="text-bordeaux text-sm hover:text-red-700 p-2"><i class="fa fa-trash"></i></button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        let finalizandoCompra = false;
+
+        async function finalizarCompra() {
+            if (finalizandoCompra) return;
+            if(carrinho.length === 0) {
+                alert('Sua sacola está vazia!');
+                return;
+            }
+            if (!db) {
+                alert('Não foi possível conectar à loja. Verifique sua internet e atualize a página.');
+                return;
+            }
+
+            const contagem = {};
+            carrinho.forEach(i => { contagem[i.id] = (contagem[i.id] || 0) + 1; });
+            const acimaDoLimite = Object.keys(contagem).find(id => contagem[id] > LIMITE_POR_PRODUTO);
+            if (acimaDoLimite) {
+                const pr = produtos.find(x => String(x.id) === acimaDoLimite);
+                alert('O limite é de ' + LIMITE_POR_PRODUTO + ' unidades por produto' + (pr ? ' ("' + pr.nome + '")' : '') + '. Ajuste a sacola e tente novamente.');
+                return;
+            }
+            const indisponivel = Object.keys(contagem).some(id => {
+                const pr = produtos.find(x => String(x.id) === id);
+                return !pr || pr.estoque < contagem[id];
+            });
+            if (indisponivel) {
+                alert('Algum item da sua sacola não está mais disponível na quantidade escolhida. Remova-o ou ajuste a quantidade e tente novamente.');
+                aplicarFiltros();
+                return;
+            }
+
+            abrirModalDados();
+        }
+
+        function abrirModalDados() {
+            document.getElementById('dados-nome').value = (clienteNome && clienteNome !== 'Cliente') ? clienteNome : '';
+            document.getElementById('dados-whatsapp').value = clienteTelefoneDigitado || '';
+            if (historicoSacolaAtivo) {
+                history.replaceState(Object.assign({}, history.state || {}, { overlayCompra: 'finalizacao' }), '', window.location.href);
+            } else {
+                history.pushState(Object.assign({}, history.state || {}, { overlayCompra: 'finalizacao' }), '', window.location.href);
+                historicoSacolaAtivo = true;
+            }
+            const modal = document.getElementById('modal-dados-cliente');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function fecharModalDados() {
+            const modal = document.getElementById('modal-dados-cliente');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function fecharModalDadosEContinuarComprando() {
+            fecharModalDados();
+            fecharCarrinho();
+            mostrarSecao('produtos');
+        }
+
+        // Aceita (11) 91234-5678, 11912345678, +55 11 91234-5678... e devolve 5511912345678
+        function normalizarTelefone(txt) {
+            const d = String(txt || '').replace(/\D/g, '');
+            if ((d.length === 12 || d.length === 13) && d.indexOf('55') === 0) return d;
+            if (d.length === 10 || d.length === 11) return '55' + d;
+            return null;
+        }
+
+        function formatarTelefone(tel) {
+            const d = String(tel || '').replace(/\D/g, '').replace(/^55/, '');
+            if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+            if (d.length === 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+            return d;
+        }
+
+        async function confirmarDadosPedido(event) {
+            event.preventDefault();
+            if (finalizandoCompra) return;
+            if (carrinho.length === 0) { fecharModalDados(); return; }
+
+            const nome = document.getElementById('dados-nome').value.trim();
+            const digitado = document.getElementById('dados-whatsapp').value;
+            const telefone = normalizarTelefone(digitado);
+            if (!nome) { alert('Informe o seu nome.'); return; }
+            if (!telefone) { alert('Informe um WhatsApp válido com DDD. Exemplo: (11) 91234-5678'); return; }
+
+            clienteNome = nome;
+            clienteTelefone = telefone;
+            clienteTelefoneDigitado = digitado;
+            fecharModalDados();
+
+            const numeroPedido = gerarNumeroPedido();
+
+            let mensagem = `Olá! Meu nome é *${clienteNome}* e gostaria de finalizar o meu pedido no Espaço de Axé:\n\n*Pedido nº:* ${numeroPedido}\n\n*Itens do Pedido:*\n`;
+            carrinho.forEach(item => {
+                mensagem += `- ${item.nome} (R$ ${item.preco.toFixed(2).replace('.', ',')})\n`;
+            });
+
+            let totalTexto = total.toFixed(2).replace('.', ',');
+            mensagem += `\n*Total a pagar: R$ ${totalTexto}* + Frete a Consultar`;
+            mensagem += `\n\nComo faço para realizar o pagamento?`;
+
+            let urlWhatsApp = `https://wa.me/${TELEFONE_LOJA}?text=${encodeURIComponent(mensagem)}`;
+
+            // Abre a aba do WhatsApp já agora (enquanto o clique ainda vale) e preenche depois
+            let janela = null;
+            try { janela = window.open('about:blank', '_blank'); } catch (e) { janela = null; }
+
+            finalizandoCompra = true;
+            try {
+                await registrarPedido(numeroPedido);
+            } catch (e) {
+                finalizandoCompra = false;
+                if (janela) { try { janela.close(); } catch (e2) {} }
+                console.error(e);
+                const msg = String((e && e.message) || '');
+                if (msg.indexOf('LIMITE:') === 0) {
+                    alert('O limite é de ' + LIMITE_POR_PRODUTO + ' unidades por produto ("' + msg.replace('LIMITE:', '') + '"). Ajuste a sacola e tente novamente.');
+                } else if (msg.indexOf('SEM_ESTOQUE:') === 0) {
+                    alert('O item "' + msg.replace('SEM_ESTOQUE:', '') + '" acabou de ficar indisponível. Atualize a sacola e tente novamente.');
+                } else {
+                    alert('Não foi possível registrar o pedido. Verifique sua internet e tente novamente.');
+                }
+                aplicarFiltros();
+                abrirModalDados();
+                return;
+            }
+            finalizandoCompra = false;
+
+            carrinho = [];
+            total = 0;
+            atualizarCarrinho();
+            fecharCarrinho();
+            mostrarSecao('produtos');
+
+            if (janela && !janela.closed) {
+                janela.location.href = urlWhatsApp;
+            } else if (!janela) {
+                abrirWhatsApp(urlWhatsApp);
+            }
+        }
+
+        const TELEFONE_LOJA = "5511994010607";
+
+        function encomendarProduto(id) {
+            const prod = produtos.find(p => p.id === id);
+            if (!prod) return;
+            const preco = prod.preco.toFixed(2).replace('.', ',');
+            const mensagem = `Olá! Gostaria de fazer uma encomenda no Espaço de Axé:\n\n*Produto:* ${prod.nome}\n*Categoria:* ${prod.orixa}\n*Valor:* R$ ${preco} + Frete a Consultar\n\nPodem me informar o prazo e a disponibilidade?`;
+            abrirWhatsApp(`https://wa.me/${TELEFONE_LOJA}?text=${encodeURIComponent(mensagem)}`);
+        }
+
+        function abrirWhatsApp(url) {
+            const janela = window.open(url, '_blank');
+            if (!janela) window.location.href = url;
+        }
+
+        function enviarContatoWhatsApp(event) {
+            event.preventDefault();
+            const nome = document.getElementById('contato-nome').value.trim();
+            const email = document.getElementById('contato-email').value.trim();
+            const texto = document.getElementById('contato-mensagem').value.trim();
+            if (!nome || !texto) return;
+
+            let mensagem = `Olá! Enviei uma mensagem pelo site do Espaço de Axé:\n\n*Nome:* ${nome}`;
+            if (email) mensagem += `\n*E-mail:* ${email}`;
+            mensagem += `\n\n*Mensagem:*\n${texto}`;
+
+            event.target.reset();
+            abrirWhatsApp(`https://wa.me/${TELEFONE_LOJA}?text=${encodeURIComponent(mensagem)}`);
+        }
+
+        // ===== LOGIN DO PAINEL (Firebase Authentication: e-mail e senha) =====
+        function painelLogado() {
+            return !!(auth && auth.currentUser);
+        }
+
+        function atualizarAcessoPainel() {
+            const logado = painelLogado();
+            document.getElementById('gerenciar-login').classList.toggle('hidden', logado);
+            document.getElementById('gerenciar-painel').classList.toggle('hidden', !logado);
+            if (logado) {
+                atualizarListaPainel();
+                atualizarPedidosPainel();
+            }
+        }
+
+        async function entrarNoPainel(event) {
+            event.preventDefault();
+            const formulario = event.target;
+            const email = document.getElementById('login-usuario').value.trim();
+            const senha = document.getElementById('login-senha').value;
+            const erro = document.getElementById('login-erro');
+
+            if (!auth) {
+                erro.textContent = 'Não foi possível conectar ao servidor. Verifique sua internet e atualize a página.';
+                erro.classList.remove('hidden');
+                return;
+            }
+            try {
+                await auth.signInWithEmailAndPassword(email, senha);
+                erro.classList.add('hidden');
+                formulario.reset();
+            } catch (e) {
+                const mensagens = {
+                    'auth/network-request-failed': 'Sem conexão. Verifique sua internet e tente novamente.',
+                    'auth/too-many-requests': 'Muitas tentativas. Aguarde alguns minutos e tente novamente.'
+                };
+                erro.textContent = mensagens[e && e.code] || 'E-mail ou senha incorretos.';
+                erro.classList.remove('hidden');
+                document.getElementById('login-senha').value = '';
+            }
+        }
+
+        async function sairDoPainel() {
+            try { if (auth) await auth.signOut(); } catch (e) {}
+            if (window.location.hash === '#gerenciar') history.replaceState(null, '', window.location.pathname + window.location.search);
+            mostrarSecao('inicio');
+        }
+
+        function trocarAbaPainel(aba, registrarHistorico) {
+            if (registrarHistorico !== false && (!history.state || history.state.pagina !== 'gerenciar' || history.state.abaPainel !== aba)) {
+                history.pushState(Object.assign({}, history.state || {}, { pagina: 'gerenciar', abaPainel: aba }), '', window.location.href);
+            }
+            const ativa = "px-5 py-2 border border-bordeaux bg-bordeaux text-white transition text-sm font-semibold";
+            const inativa = "px-5 py-2 border border-gray-600 text-gray-400 hover:border-bordeaux hover:text-bordeaux transition text-sm";
+            ['produtos', 'pedidos', 'producao', 'aenviar', 'enviados', 'avaliacoes'].forEach(nome => {
+                document.getElementById('aba-' + nome).classList.toggle('hidden', aba !== nome);
+                document.getElementById('tab-' + nome).className = aba === nome ? ativa : inativa;
+            });
+            if (aba !== 'produtos') {
+                atualizarPedidosPainel();
+                atualizarAvaliacoesPainel();
+            }
+        }
+
+        // ===== PEDIDOS =====
+        let pedidos = [];
+        let filtroPedidos = 'pendentes';
+
+        function escaparHtml(txt) {
+            return String(txt).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function formatarReais(v) {
+            return 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+        }
+
+        // Gera um número de pedido único, ex.: AXE-261029-K7P3 (data + 4 caracteres)
+        function gerarNumeroPedido() {
+            const d = new Date();
+            const dois = n => String(n).padStart(2, '0');
+            const data = String(d.getFullYear()).slice(2) + dois(d.getMonth() + 1) + dois(d.getDate());
+            const alfabeto = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let sufixo = '';
+            for (let i = 0; i < 4; i++) sufixo += alfabeto[Math.floor(Math.random() * alfabeto.length)];
+            return `AXE-${data}-${sufixo}`;
+        }
+
+        function rotuloPedido(numero) {
+            return typeof numero === 'number' ? '#' + numero : numero;
+        }
+
+        // Grava o pedido e baixa o estoque no mesmo passo (tudo ou nada)
+        async function registrarPedido(numeroPedido) {
+            const agrupados = {};
+            carrinho.forEach(item => {
+                if (!agrupados[item.id]) agrupados[item.id] = { id: item.id, nome: item.nome, preco: item.preco, qtd: 0 };
+                agrupados[item.id].qtd++;
+            });
+            const itens = Object.values(agrupados);
+
+            const pedido = {
+                id: Date.now(),
+                numero: numeroPedido,
+                data: new Date().toISOString(),
+                cliente: clienteNome || 'Cliente',
+                telefone: clienteTelefone || '',
+                itens: itens.map(i => Object.assign({}, i, { status: 'novo' })),
+                total: total,
+                enviado: false
+            };
+
+            await db.runTransaction(async tx => {
+                const refs = itens.map(i => db.collection('produtos').doc(String(i.id)));
+                itens.forEach(i => {
+                    if (i.qtd > LIMITE_POR_PRODUTO) throw new Error('LIMITE:' + i.nome);
+                });
+                const leituras = await Promise.all(refs.map(r => tx.get(r)));
+                leituras.forEach((snap, idx) => {
+                    const atual = snap.exists ? snap.data().estoque : 0;
+                    if (!snap.exists || atual < itens[idx].qtd) {
+                        throw new Error('SEM_ESTOQUE:' + itens[idx].nome);
+                    }
+                });
+                leituras.forEach((snap, idx) => {
+                    tx.update(refs[idx], { estoque: snap.data().estoque - itens[idx].qtd });
+                });
+                tx.set(db.collection('pedidos').doc(numeroPedido), pedido);
+            });
+        }
+
+        // ===== FLUXO DO PEDIDO: novo -> em produção -> enviado =====
+        const selecao = {};    // itens marcados nas listas do painel
+        const rastreios = {};  // códigos de rastreio digitados (por pedido)
+
+        function normalizarPedido(p) {
+            if (!Array.isArray(p.itens)) p.itens = [];
+            p.itens.forEach(i => { if (!i.status) i.status = p.enviado ? 'enviado' : 'novo'; });
+        }
+
+        function chaveSel(modo, pedidoId, itemId) { return modo + ':' + pedidoId + ':' + itemId; }
+
+        function itensDoModo(p, modo) {
+            const mapa = { novos: ['novo'], producao: ['producao'], aenviar: ['aenviar'], postados: ['postado'], enviados: ['enviado'] };
+            return p.itens.filter(i => mapa[modo].indexOf(i.status) !== -1);
+        }
+
+        // Lê as caixinhas que estão marcadas na tela (o que a pessoa vê é o que vale)
+        function itensSelecionados(modo, p) {
+            const caixas = document.querySelectorAll('input[data-sel]');
+            if (!caixas || caixas.length === 0) {
+                return itensDoModo(p, modo).filter(i => selecao[chaveSel(modo, p.id, i.id)]);
+            }
+            const marcados = new Set();
+            caixas.forEach(cb => {
+                if (cb.checked && cb.getAttribute('data-sel') === modo && cb.getAttribute('data-pedido') === String(p.id)) {
+                    marcados.add(Number(cb.getAttribute('data-item')));
+                }
+            });
+            return itensDoModo(p, modo).filter(i => marcados.has(i.id));
+        }
+
+        function definirSelecao(modo, pedidoId, itemId, marcado) {
+            selecao[chaveSel(modo, pedidoId, itemId)] = !!marcado;
+        }
+
+        // Mensagem quando nada está marcado no pedido em que o botão foi clicado
+        function avisoSemSelecao(p, modo, textoPadrao) {
+            const outro = pedidos.find(o => o.id !== p.id && itensSelecionados(modo, o).length > 0);
+            return outro
+                ? 'Nenhum item marcado neste pedido (' + rotuloPedido(p.numero) + '). Você marcou itens em outro pedido (' + rotuloPedido(outro.numero) + '): use o botão que está dentro do cartão desse pedido.'
+                : textoPadrao;
+        }
+
+        function alternarSelecao(modo, pedidoId, itemId) {
+            const k = chaveSel(modo, pedidoId, itemId);
+            selecao[k] = !selecao[k];
+        }
+
+        function selecionarTodos(modo, pedidoId) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            itensDoModo(p, modo).forEach(i => { selecao[chaveSel(modo, p.id, i.id)] = true; });
+            atualizarPedidosPainel();
+        }
+
+        function formatarData(iso) {
+            return new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+        }
+
+        function gruposDeEnvio(p) {
+            const grupos = [];
+            p.itens.filter(i => i.status === 'enviado').forEach(i => {
+                let g = grupos.find(x => x.rastreio === (i.rastreio || ''));
+                if (!g) { g = { rastreio: i.rastreio || '', data: i.dataEnvio || '', itens: [] }; grupos.push(g); }
+                g.itens.push(i);
+            });
+            return grupos;
+        }
+
+        // ----- mensagens para o cliente -----
+        function listaItensTexto(itens) {
+            return itens.map(i => `- ${i.nome} (${i.qtd}x)`).join('\n');
+        }
+
+        function mensagemProducao(p, itens) {
+            return `Olá, ${p.cliente}! Aqui é do Espaço de Axé.\n\nSeu pedido *${p.numero}* já está em produção:\n${listaItensTexto(itens)}\n\nAssim que for postado nos Correios, avisaremos por aqui com o código de rastreio.`;
+        }
+
+        function mensagemEnvio(p, itens, rastreio) {
+            let msg = `Olá, ${p.cliente}! Aqui é do Espaço de Axé.\n\nSeu pedido *${p.numero}* foi postado nos Correios!\n\n*Itens enviados:*\n${listaItensTexto(itens)}\n\n*Código de rastreio:* ${rastreio}\n\nVocê pode acompanhar pelo site ou aplicativo dos Correios.`;
+            if (/^https?:$/.test(window.location.protocol)) {
+                msg += `\n\nQuando receber, conte como foi o seu atendimento: ${window.location.origin}${window.location.pathname}#avaliacoes`;
+            }
+            return msg;
+        }
+
+        function urlWhatsAppCliente(p, mensagem) {
+            const destino = p.telefone ? p.telefone : '';
+            return `https://wa.me/${destino}?text=${encodeURIComponent(mensagem)}`;
+        }
+
+        // Abre a aba do WhatsApp já no clique, grava no banco e só então preenche a mensagem
+        async function executarEAbrirWhatsApp(acao, url) {
+            let janela = null;
+            try { janela = window.open('about:blank', '_blank'); } catch (e) { janela = null; }
+            try {
+                await acao();
+            } catch (e) {
+                if (janela) { try { janela.close(); } catch (e2) {} }
+                throw e;
+            }
+            if (janela && !janela.closed) {
+                janela.location.href = url;
+            } else {
+                alert('A alteração foi salva, mas o navegador bloqueou a abertura do WhatsApp. Permita pop-ups para este site e use o botão "Avisar cliente no WhatsApp" do pedido.');
+            }
+        }
+
+        function abrirWhatsAppPainel(url) {
+            let janela = null;
+            try { janela = window.open(url, '_blank'); } catch (e) { janela = null; }
+            if (!janela) alert('O navegador bloqueou a abertura do WhatsApp. Permita pop-ups para este site e tente de novo.');
+        }
+
+        // ----- ações -----
+        async function enviarParaProducao(pedidoId) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const sel = itensSelecionados('novos', p);
+            if (sel.length === 0) { alert(avisoSemSelecao(p, 'novos', 'Marque ao menos um item para enviar à produção.')); return; }
+
+            const ids = new Set(sel.map(i => i.id));
+            const agora = new Date().toISOString();
+            const itens = p.itens.map(i => ids.has(i.id) ? Object.assign({}, i, { status: 'producao', dataProducao: agora }) : i);
+            const url = urlWhatsAppCliente(p, mensagemProducao(p, sel));
+            try {
+                await executarEAbrirWhatsApp(() => db.collection('pedidos').doc(String(p.numero)).update({ itens: itens }), url);
+                sel.forEach(i => { delete selecao[chaveSel('novos', p.id, i.id)]; });
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível atualizar o pedido. Verifique a internet e tente novamente.');
+            }
+        }
+
+        async function finalizarEnvio(pedidoId) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const sel = itensSelecionados('postados', p);
+            if (sel.length === 0) { alert(avisoSemSelecao(p, 'postados', 'Marque ao menos um item que foi postado nos Correios.')); return; }
+
+            const campo = document.getElementById('rastreio-' + pedidoId);
+            const codigo = String((campo && campo.value) || rastreios[pedidoId] || '').replace(/\s+/g, '').toUpperCase();
+            if (!codigo) { alert('Digite o código de rastreio dos Correios.'); return; }
+            if (!/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(codigo) &&
+                !confirm('O código "' + codigo + '" não parece um código dos Correios (exemplo: AA123456789BR). Deseja finalizar mesmo assim?')) {
+                return;
+            }
+
+            const ids = new Set(sel.map(i => i.id));
+            const agora = new Date().toISOString();
+            const itens = p.itens.map(i => ids.has(i.id) ? Object.assign({}, i, { status: 'enviado', rastreio: codigo, dataEnvio: agora }) : i);
+            const todosEnviados = itens.every(i => i.status === 'enviado');
+            const url = urlWhatsAppCliente(p, mensagemEnvio(p, sel, codigo));
+            try {
+                await executarEAbrirWhatsApp(() => db.collection('pedidos').doc(String(p.numero)).update({ itens: itens, enviado: todosEnviados }), url);
+                sel.forEach(i => { delete selecao[chaveSel('novos', p.id, i.id)]; delete selecao[chaveSel('postados', p.id, i.id)]; delete selecao[chaveSel('aenviar', p.id, i.id)]; delete selecao[chaveSel('producao', p.id, i.id)]; });
+                delete rastreios[pedidoId];
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível registrar o envio. Verifique a internet e tente novamente.');
+            }
+        }
+
+        // Muda o status dos itens marcados (sem enviar mensagem ao cliente)
+        async function mudarStatusItens(pedidoId, modo, novoStatus, campoData, textoVazio) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const sel = itensSelecionados(modo, p);
+            if (sel.length === 0) { alert(avisoSemSelecao(p, modo, textoVazio)); return; }
+            const ids = new Set(sel.map(i => i.id));
+            const agora = new Date().toISOString();
+            const itens = p.itens.map(i => {
+                if (!ids.has(i.id)) return i;
+                const novo = Object.assign({}, i, { status: novoStatus });
+                novo[campoData] = agora;
+                return novo;
+            });
+            try {
+                await db.collection('pedidos').doc(String(p.numero)).update({ itens: itens });
+                sel.forEach(i => { delete selecao[chaveSel(modo, p.id, i.id)]; });
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível atualizar o pedido. Verifique a internet e tente novamente.');
+            }
+        }
+
+        function encaminharParaAEnviar(pedidoId) {
+            return mudarStatusItens(pedidoId, 'producao', 'aenviar', 'dataPronto', 'Marque ao menos um item que está pronto.');
+        }
+
+        function encaminharParaEnviados(pedidoId) {
+            return mudarStatusItens(pedidoId, 'aenviar', 'postado', 'dataPostagem', 'Marque ao menos um item para encaminhar.');
+        }
+
+        function reenviarAvisoProducao(pedidoId) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const itens = itensDoModo(p, 'producao');
+            if (itens.length === 0) return;
+            abrirWhatsAppPainel(urlWhatsAppCliente(p, mensagemProducao(p, itens)));
+        }
+
+        function reenviarAvisoEnvio(pedidoId, indice) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const g = gruposDeEnvio(p)[indice];
+            if (!g) return;
+            abrirWhatsAppPainel(urlWhatsAppCliente(p, mensagemEnvio(p, g.itens, g.rastreio)));
+        }
+
+        // ----- desenho das listas -----
+        function linhaItemPedido(p, i, modo) {
+            const prod = produtos.find(x => x.id === i.id);
+            const foto = prod
+                ? `<img src="${prod.imagem}" alt="" title="Clique para ampliar" onclick="ampliarFotoPedido(event, ${i.id})" class="w-16 h-16 object-contain bg-black/40 rounded-sm border border-gray-700 shrink-0 cursor-zoom-in hover:border-bordeaux transition">`
+                : `<div class="w-16 h-16 flex items-center justify-center bg-black/40 border border-gray-700 rounded-sm text-gray-600 shrink-0"><i class="fa fa-image"></i></div>`;
+            const selecionavel = (modo !== 'enviados');
+            const marcado = !!selecao[chaveSel(modo, p.id, i.id)];
+            const chip = '';
+            const extra = modo === 'enviados'
+                ? `<p class="text-xs text-green-400 mt-1"><i class="fa fa-truck mr-1"></i>${escaparHtml(i.rastreio || '')}</p>`
+                : '';
+            const tag = selecionavel ? 'label' : 'div';
+            return `
+                <${tag} class="flex items-center gap-4 py-3 border-b border-gray-800 ${selecionavel ? 'cursor-pointer' : ''}">
+                    ${selecionavel ? `<input type="checkbox" data-sel="${modo}" data-pedido="${p.id}" data-item="${i.id}" ${marcado ? 'checked' : ''} onchange="definirSelecao('${modo}', ${p.id}, ${i.id}, this.checked)" class="w-5 h-5 accent-bordeaux shrink-0">` : ''}
+                    ${foto}
+                    <div class="flex-1 min-w-0">
+                        <p class="font-semibold text-white">${escaparHtml(i.nome)}</p>
+                        <p class="text-xs text-gray-400">${formatarReais(i.preco)} cada</p>
+                        ${chip}${extra}
+                    </div>
+                    <div class="text-right shrink-0">
+                        <p class="text-lg font-bold text-cream">${i.qtd}x</p>
+                        <p class="text-xs text-gray-400">${formatarReais(i.preco * i.qtd)}</p>
+                    </div>
+                </${tag}>`;
+        }
+
+        function cartaoPedido(p, modo) {
+            const itens = itensDoModo(p, modo);
+            const tel = p.telefone
+                ? `<a href="https://wa.me/${p.telefone}" target="_blank" rel="noopener" class="text-green-400 hover:underline"><i class="fa fa-whatsapp mr-1"></i>${formatarTelefone(p.telefone)}</a>`
+                : '<span class="text-gray-500"><i class="fa fa-whatsapp mr-1"></i>sem WhatsApp</span>';
+            const lixeira = `<button onclick="excluirPedido(${p.id})" class="text-red-500 hover:text-red-400 text-sm px-3 py-2 rounded hover:bg-red-950/30 transition" title="Excluir pedido"><i class="fa fa-trash"></i></button>`;
+            const btnBase = 'px-4 py-2 text-sm font-semibold rounded-sm transition';
+            let rodape = '';
+
+            if (modo === 'novos') {
+                rodape = `
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-4">
+                        <button onclick="selecionarTodos('novos', ${p.id})" class="text-sm text-bordeaux hover:underline">Selecionar todos</button>
+                        <div class="flex gap-2">
+                            <button onclick="enviarParaProducao(${p.id})" class="${btnBase} bg-bordeaux text-white hover:bg-red-700"><i class="fa fa-wrench mr-2"></i>Enviar para produção</button>
+                            ${lixeira}
+                        </div>
+                    </div>`;
+            } else if (modo === 'producao') {
+                rodape = `
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-4">
+                        <button onclick="selecionarTodos('producao', ${p.id})" class="text-sm text-bordeaux hover:underline">Selecionar todos</button>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="reenviarAvisoProducao(${p.id})" class="${btnBase} border border-gray-600 text-gray-300 hover:border-bordeaux"><i class="fa fa-whatsapp mr-2"></i>Avisar cliente no WhatsApp</button>
+                            <button onclick="encaminharParaAEnviar(${p.id})" class="${btnBase} bg-bordeaux text-white hover:bg-red-700"><i class="fa fa-cube mr-2"></i>Encaminhar para Pedidos a Enviar</button>
+                            ${lixeira}
+                        </div>
+                    </div>`;
+            } else if (modo === 'aenviar') {
+                rodape = `
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-4">
+                        <button onclick="selecionarTodos('aenviar', ${p.id})" class="text-sm text-bordeaux hover:underline">Selecionar todos</button>
+                        <div class="flex gap-2">
+                            <button onclick="encaminharParaEnviados(${p.id})" class="${btnBase} bg-bordeaux text-white hover:bg-red-700"><i class="fa fa-truck mr-2"></i>Encaminhar para Pedidos Enviados</button>
+                            ${lixeira}
+                        </div>
+                    </div>`;
+            } else if (modo === 'postados') {
+                rodape = `
+                    <div class="pt-4 space-y-3">
+                        <button onclick="selecionarTodos('postados', ${p.id})" class="text-sm text-bordeaux hover:underline">Selecionar todos</button>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="text" id="rastreio-${p.id}" value="${escaparHtml(rastreios[p.id] || '')}" oninput="rastreios[${p.id}] = this.value" placeholder="Código de rastreio (ex.: AA123456789BR)" class="flex-1 px-4 py-2 bg-dark border border-gray-700 rounded-sm text-white uppercase focus:outline-none focus:border-bordeaux">
+                            <button onclick="finalizarEnvio(${p.id})" class="${btnBase} bg-bordeaux text-white hover:bg-red-700"><i class="fa fa-truck mr-2"></i>Finalizar envio e avisar cliente</button>
+                        </div>
+                    </div>`;
+            } else if (modo === 'enviados') {
+                rodape = '<div class="pt-4 space-y-2">' + gruposDeEnvio(p).map((g, idx) => `
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <p class="text-sm text-gray-300"><i class="fa fa-truck text-green-400 mr-2"></i>Rastreio <span class="font-semibold text-white">${escaparHtml(g.rastreio)}</span>${g.data ? ' • ' + formatarData(g.data) : ''}</p>
+                        <button onclick="reenviarAvisoEnvio(${p.id}, ${idx})" class="${btnBase} border border-gray-600 text-gray-300 hover:border-bordeaux"><i class="fa fa-whatsapp mr-2"></i>Reenviar aviso</button>
+                    </div>`).join('') + '</div>';
+            }
+
+            return `
+                <div class="bg-darkest border border-gray-800 rounded-sm p-5">
+                    <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
+                        <div>
+                            <h4 class="font-display text-xl text-cream">Pedido ${rotuloPedido(p.numero)}</h4>
+                            <p class="text-sm text-gray-400"><i class="fa fa-user mr-1"></i>${escaparHtml(p.cliente)} &nbsp;•&nbsp; ${tel} &nbsp;•&nbsp; <i class="fa fa-clock-o mr-1"></i>${formatarData(p.data)}</p>
+                        </div>
+                        <p class="text-sm text-gray-400">Total do pedido: <span class="font-bold text-cream">${formatarReais(p.total)}</span></p>
+                    </div>
+                    <div>${itens.map(i => linhaItemPedido(p, i, modo)).join('')}</div>
+                    ${rodape}
+                </div>`;
+        }
+
+        function preencherLista(idLista, modo, vazio) {
+            const el = document.getElementById(idLista);
+            if (!el) return 0;
+            const visiveis = pedidos.filter(p => itensDoModo(p, modo).length > 0);
+            el.innerHTML = visiveis.length === 0
+                ? `<div class="py-10 text-center text-gray-500 border border-dashed border-gray-800 rounded-sm"><i class="fa fa-inbox text-3xl mb-2 text-gray-600"></i><p class="text-sm">${vazio}</p></div>`
+                : visiveis.map(p => cartaoPedido(p, modo)).join('');
+            return visiveis.reduce((a, p) => a + itensDoModo(p, modo).length, 0);
+        }
+
+        function atualizarBadge(id, qtd) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = qtd;
+            el.classList.toggle('hidden', qtd === 0);
+        }
+
+        function atualizarPedidosPainel() {
+            const novos = preencherLista('lista-pedidos', 'novos', 'Nenhum item novo aguardando produção.');
+            const emProducao = preencherLista('lista-producao', 'producao', 'Nenhum item em produção no momento.');
+            const aEnviar = preencherLista('lista-aenviar', 'aenviar', 'Nenhum item pronto aguardando envio.');
+            preencherLista('lista-postados', 'postados', 'Nenhum item aguardando código de rastreio.');
+            preencherLista('lista-enviados', 'enviados', 'Nenhum pedido enviado ainda.');
+            atualizarBadge('badge-pedidos', novos);
+            atualizarBadge('badge-producao', emProducao);
+            atualizarBadge('badge-aenviar', aEnviar);
+        }
+
+        // ----- avaliações (painel) -----
+        function atualizarAvaliacoesPainel() {
+            const el = document.getElementById('lista-avaliacoes-painel');
+            if (!el) return;
+            const pendentes = avaliacoesPainel.filter(a => !a.aprovada).length;
+            atualizarBadge('badge-avaliacoes', pendentes);
+            if (avaliacoesPainel.length === 0) {
+                el.innerHTML = '<div class="py-10 text-center text-gray-500 border border-dashed border-gray-800 rounded-sm"><i class="fa fa-comments-o text-3xl mb-2 text-gray-600"></i><p class="text-sm">Nenhuma avaliação recebida ainda.</p></div>';
+                return;
+            }
+            const ordenadas = avaliacoesPainel.slice().sort((a, b) => (a.aprovada === b.aprovada) ? b.id - a.id : (a.aprovada ? 1 : -1));
+            el.innerHTML = ordenadas.map(a => {
+                return `
+                    <div class="bg-darkest border ${a.aprovada ? 'border-gray-800' : 'border-bordeaux/60'} rounded-sm p-5">
+                        <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+                            <div>
+                                <p class="font-semibold text-white">${escaparHtml(a.nome)}</p>
+                                <p class="text-xs text-gray-400">${formatarData(a.data)}</p>
+                            </div>
+                            <div>${gerarEstrelas(a.nota)}</div>
+                        </div>
+                        <p class="text-sm text-gray-300 whitespace-pre-line">${escaparHtml(a.comentario)}</p>
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-4">
+                            <span class="text-xs font-semibold uppercase ${a.aprovada ? 'text-green-400' : 'text-red-400'}">${a.aprovada ? 'Publicada' : 'Aguardando aprovação'}</span>
+                            <div class="flex gap-2">
+                                <button onclick="alternarAprovacaoAvaliacao(${a.id})" class="px-4 py-2 text-sm font-semibold rounded-sm transition ${a.aprovada ? 'border border-gray-600 text-gray-300 hover:border-bordeaux' : 'bg-bordeaux text-white hover:bg-red-700'}">${a.aprovada ? 'Ocultar' : 'Aprovar e publicar'}</button>
+                                <button onclick="excluirAvaliacao(${a.id})" class="text-red-500 hover:text-red-400 text-sm px-3 py-2 rounded hover:bg-red-950/30 transition" title="Excluir avaliação"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        async function alternarAprovacaoAvaliacao(id) {
+            const a = avaliacoesPainel.find(x => x.id === id);
+            if (!a) return;
+            try {
+                await db.collection('avaliacoes').doc(String(id)).update({ aprovada: !a.aprovada });
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível atualizar a avaliação. Verifique a internet e tente novamente.');
+            }
+        }
+
+        async function excluirAvaliacao(id) {
+            if (!confirm('Deseja realmente excluir esta avaliação?')) return;
+            try {
+                await db.collection('avaliacoes').doc(String(id)).delete();
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível excluir a avaliação. Verifique a internet e tente novamente.');
+            }
+        }
+
+        // ----- avaliações (página pública) -----
+        let notaSelecionada = 0;
+        let enviandoAvaliacao = false;
+
+        function selecionarNota(n) {
+            notaSelecionada = n;
+            document.querySelectorAll('#estrelas-form button').forEach((btn, idx) => {
+                btn.className = (idx < n ? 'text-yellow-400' : 'text-gray-600') + ' hover:text-yellow-400 transition';
+            });
+        }
+
+        let avaliacoesVisiveis = 6;
+
+        function mostrarMaisAvaliacoes() {
+            avaliacoesVisiveis += 6;
+            renderizarAvaliacoes();
+        }
+
+        function corAvatar(nome) {
+            const cores = ['#8B1E3F', '#B45309', '#0F766E', '#4338CA', '#6D28D9', '#15803D'];
+            let soma = 0;
+            String(nome).split('').forEach(c => { soma += c.charCodeAt(0); });
+            return cores[soma % cores.length];
+        }
+
+        function alternarComentario(botao) {
+            const texto = botao.previousElementSibling;
+            const recolhido = texto.classList.toggle('line-clamp-5');
+            botao.textContent = recolhido ? 'Ler mais' : 'Ler menos';
+        }
+
+        function renderizarAvaliacoes() {
+            const lista = document.getElementById('lista-avaliacoes');
+            const resumo = document.getElementById('resumo-avaliacoes');
+            const botaoMais = document.getElementById('botao-mais-avaliacoes');
+            if (!lista || !resumo) return;
+
+            if (avaliacoes.length === 0) {
+                resumo.innerHTML = '';
+                lista.innerHTML = '<p class="col-span-full text-center text-gray-500 py-12">Ainda não há avaliações publicadas. Seja a primeira pessoa a avaliar!</p>';
+                if (botaoMais) botaoMais.classList.add('hidden');
+                return;
+            }
+
+            const total = avaliacoes.length;
+            const media = avaliacoes.reduce((a, r) => a + r.nota, 0) / total;
+            const barras = [5, 4, 3, 2, 1].map(n => {
+                const qtd = avaliacoes.filter(r => r.nota === n).length;
+                const pct = Math.round((qtd / total) * 100);
+                return `<div class="flex items-center gap-2 text-xs text-gray-400">
+                            <span class="w-3 text-right">${n}</span>
+                            <div class="flex-1 h-2 bg-darkest rounded-full overflow-hidden"><div class="h-full bg-yellow-400" style="width:${pct}%"></div></div>
+                        </div>`;
+            }).join('');
+
+            resumo.innerHTML = `
+                <div class="bg-dark p-5 rounded-sm flex flex-wrap items-center gap-6">
+                    <div class="text-center">
+                        <div class="text-5xl font-display font-semibold">${media.toFixed(1).replace('.', ',')}</div>
+                        <div class="text-lg my-1">${gerarEstrelas(Math.round(media))}</div>
+                        <p class="text-xs text-gray-400">${total} ${total === 1 ? 'avaliação' : 'avaliações'}</p>
+                    </div>
+                    <div class="flex-1 min-w-[180px] space-y-1">${barras}</div>
+                </div>`;
+
+            lista.innerHTML = avaliacoes.slice(0, avaliacoesVisiveis).map(r => {
+                const nome = escaparHtml(r.nome);
+                const data = new Date(r.data).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+                const longo = String(r.comentario).length > 180;
+                return `
+                    <div class="bg-dark p-5 rounded-sm flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shrink-0" style="background:${corAvatar(r.nome)}">${escaparHtml(String(r.nome).trim().charAt(0).toUpperCase())}</div>
+                            <div class="min-w-0">
+                                <p class="font-semibold truncate">${nome}</p>
+                                <p class="text-xs text-gray-500">${data}</p>
+                            </div>
+                        </div>
+                        <div class="text-sm mb-2">${gerarEstrelas(r.nota)}</div>
+                        <p class="text-sm text-gray-300 whitespace-pre-line break-words ${longo ? 'line-clamp-5' : ''}">${escaparHtml(r.comentario)}</p>
+                        ${longo ? '<button type="button" onclick="alternarComentario(this)" class="text-xs text-bordeaux hover:underline mt-2 self-start">Ler mais</button>' : ''}
+                    </div>`;
+            }).join('');
+
+            if (botaoMais) botaoMais.classList.toggle('hidden', avaliacoes.length <= avaliacoesVisiveis);
+        }
+
+        async function enviarAvaliacao(event) {
+            event.preventDefault();
+            if (enviandoAvaliacao) return;
+            if (!db) { alert('Sem conexão com o servidor. Verifique a internet e atualize a página.'); return; }
+
+            const formulario = event.target;
+            const nome = document.getElementById('aval-nome').value.trim();
+            const comentario = document.getElementById('aval-comentario').value.trim();
+
+            if (!notaSelecionada) { alert('Escolha uma nota de 1 a 5 estrelas.'); return; }
+            if (!nome || !comentario) return;
+
+            enviandoAvaliacao = true;
+            const id = Date.now();
+            try {
+                await db.collection('avaliacoes').doc(String(id)).set({
+                    id: id,
+                    nome: nome,
+                    nota: notaSelecionada,
+                    comentario: comentario,
+                    data: new Date().toISOString(),
+                    aprovada: false
+                });
+                alert('Obrigada pela sua avaliação! Ela será publicada após a conferência da loja.');
+                formulario.reset();
+                selecionarNota(0);
+            } catch (e) {
+                console.error(e);
+                if (e && e.code === 'permission-denied') {
+                    alert('O banco de dados recusou o envio (permissão negada). Avise a loja: as regras do Firestore precisam ser atualizadas para liberar as avaliações.');
+                } else if (e && (e.code === 'unavailable' || e.code === 'deadline-exceeded')) {
+                    alert('Não foi possível conectar ao servidor. Verifique a internet e tente novamente.');
+                } else {
+                    alert('Não foi possível enviar a avaliação (' + ((e && e.code) || 'erro desconhecido') + '). Tente novamente em instantes.');
+                }
+            }
+            enviandoAvaliacao = false;
+        }
+
+        async function excluirPedido(pedidoId) {
+            const p = pedidos.find(x => x.id === pedidoId);
+            if (!p) return;
+            const naoEnviados = p.itens.filter(i => i.status !== 'enviado');
+            const aviso = naoEnviados.length === 0
+                ? 'Deseja realmente excluir este pedido?'
+                : 'Deseja realmente excluir este pedido? As peças que ainda não foram enviadas voltarão para o estoque.';
+            if (!confirm(aviso)) return;
+            try {
+                await db.runTransaction(async tx => {
+                    const refPedido = db.collection('pedidos').doc(String(p.numero));
+                    const refs = naoEnviados.map(i => db.collection('produtos').doc(String(i.id)));
+                    const leituras = await Promise.all(refs.map(r => tx.get(r)));
+                    leituras.forEach((snap, idx) => {
+                        if (snap.exists) {
+                            tx.update(refs[idx], { estoque: (snap.data().estoque || 0) + naoEnviados[idx].qtd });
+                        }
+                    });
+                    tx.delete(refPedido);
+                });
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível excluir o pedido. Verifique a internet e tente novamente.');
+            }
+        }
+
+        async function atualizarEstoque(id) {
+            const campo = document.getElementById('estoque-' + id);
+            if (!campo) return;
+            const valor = parseInt(campo.value);
+            if (isNaN(valor) || valor < 0) {
+                alert('Informe uma quantidade válida (0 ou mais).');
+                return;
+            }
+            try {
+                await db.collection('produtos').doc(String(id)).update({ estoque: valor });
+                alert('Estoque atualizado!');
+            } catch (e) {
+                console.error(e);
+                alert('Não foi possível atualizar o estoque. Verifique a internet e tente novamente.');
+            }
+        }
+
+        function abrirImagemProduto(id) {
+            const prod = produtos.find(p => p.id === id);
+            if (prod) abrirModalImagem(prod.imagem, prod.nome);
+        }
+
+        function ampliarFotoPedido(event, id) {
+            event.preventDefault();
+            event.stopPropagation();
+            abrirImagemProduto(id);
+        }
+
+        function abrirCarrinho() {
+            const car = document.getElementById('carrinho');
+            const fundo = document.getElementById('fundo-carrinho');
+            if (car && car.classList.contains('translate-x-full') && !historicoSacolaAtivo) {
+                history.pushState(Object.assign({}, history.state || {}, { overlayCompra: 'sacola' }), '', window.location.href);
+                historicoSacolaAtivo = true;
+            }
+            if(car) car.classList.remove('translate-x-full');
+            if(fundo) fundo.classList.remove('hidden');
+        }
+
+        function fecharCarrinho() {
+            const car = document.getElementById('carrinho');
+            const fundo = document.getElementById('fundo-carrinho');
+            if(car) car.classList.add('translate-x-full');
+            if(fundo) fundo.classList.add('hidden');
+            if (historicoSacolaAtivo) {
+                historicoSacolaAtivo = false;
+                history.back();
+            }
+        }
+
+        function abrirBusca() {
+            const busca = document.getElementById('caixa-busca');
+            const fundo = document.getElementById('fundo-busca');
+            const campo = document.getElementById('campo-busca');
+            if(busca) busca.classList.remove('-translate-y-full');
+            if(fundo) fundo.classList.remove('hidden');
+            if(campo) campo.focus();
+        }
+
+        function fecharBusca() {
+            const busca = document.getElementById('caixa-busca');
+            const fundo = document.getElementById('fundo-busca');
+            const res = document.getElementById('resultados-busca');
+            const campo = document.getElementById('campo-busca');
+            if(busca) busca.classList.add('-translate-y-full');
+            if(fundo) fundo.classList.add('hidden');
+            if(res) res.classList.add('hidden');
+            if(campo) campo.value = '';
+        }
+    </script>
+</body>
+</html>
